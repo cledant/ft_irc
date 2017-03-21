@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 13:23:09 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/21 16:51:47 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <sys/select.h>
 # include <sys/socket.h>
 # include <sys/resource.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+# include <netdb.h>
 # include "libft.h"
 
 # define IRC_BUFF_SIZE 4096
@@ -54,5 +57,7 @@ typedef struct		s_env
 }					t_env;
 
 t_err				irc_init_env(t_env *env, const char *argv);
+void				irc_init_fd(t_fd *fd);
+t_err				irc_create_server(t_env *env);
 
 #endif

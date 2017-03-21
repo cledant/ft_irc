@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 12:32:42 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 13:23:05 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/21 15:55:18 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_err						irc_init_env(t_env *env, const char **argv)
 	env->port = ft_atoi(argv[1]);
 	if (getrlimit(RLIMIT_NOFILE, &r_lim) == -1)
 		return (ERR_GET_RLIM);
-	if ((env->maxfd = r_lim.rlim_cur) < 0)
+	if ((env->maxfd = r_lim.rlim_cur) <= 0)
 		return (ERR_MAX_FD);
 	if ((env->list_fd = (t_fd *)malloc(sizeof(t_fd) * env->maxfd)) == NULL)
 		return (ERR_ALLOC_MEM);
