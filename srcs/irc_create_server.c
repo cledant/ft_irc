@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 16:04:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 17:01:50 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/21 17:26:07 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ t_err		irc_create_server(t_env *env)
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(env->port);
 	sin.sin_addr.s_addr = INADDR_ANY;
-
+	if ((bind(sock, (sockaddr *)&sin, sizeof(sockaddr_in))) == -1)
+		return (ERROR_BIND_SOCKET);
+	if ((listen(sock, LISTEN_SIZE)) == -1)
+		return (ERROR_LISTEN_SOCKET);
+	env->list_fd[sock].type = IRC_SERVER;
 	return (ERR_NONE);
 }

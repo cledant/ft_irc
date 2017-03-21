@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 16:09:50 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 16:04:18 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/21 17:39:33 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ static int		print_err(const t_err code, const char *str)
 		printf("%s : Invalid max fd\n");
 	else if (code == ERR_ALLOC_MEM)
 		printf("%s : Can't allocate memory\n");
+	else if (code == ERR_UNKNOWN_PROTOCOL)
+		printf("%s : Unknown protocol requested\n");
+	else if (code == ERR_OPEN_SOCKET)
+		printf("%s : Can't open socket\n");
+	else if (code == ERR_BIND_SOCKET)
+		printf("%s : Can't bind socket\n");
+	else if (code == ERR_LISTEN_SOCKET)
+		printf("%s : Can't listen socket\n");
 	return (-1);
 }
 
@@ -38,5 +46,6 @@ int				main(int argc, char **argv)
 		return (print_err(err, argv[0]));
 	if ((err = irc_create_server(&env)) != ERR_NONE)
 		return (print_err(err, argv[0]));
+	irc_main_loop(&env);
 	return (0);
 }

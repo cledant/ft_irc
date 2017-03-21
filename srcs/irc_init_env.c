@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 12:32:42 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 15:55:18 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/21 17:34:38 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ t_err						irc_init_env(t_env *env, const char **argv)
 	if ((env->list_fd = (t_fd *)malloc(sizeof(t_fd) * env->maxfd)) == NULL)
 		return (ERR_ALLOC_MEM);
 	init_list_fd(env);
+	env->should_loop = 1;
 	return (ERR_NONE);
 }
