@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 19:11:37 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/22 15:42:15 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@
 
 # define IRC_BUFF_SIZE 4096
 # define LISTEN_SIZE 128
-# define CHAN_BUFFER 128
-# define MAX_CHAN_NB 128
-# define MAX_CHAN_NAME_SIZE 32
-# define MAX_CHAN_LINE_BUFF 64
-# define MAX_CHAN_LINE_SIZE 256
 
 typedef enum		s_err
 {
 	ERR_NB_ARG,
 	ERR_ARG_NOT_INT,
+	ERR_PORT_INTERVAL,
 	ERR_GET_RLIM,
 	ERR_MAX_FD,
 	ERR_ALLOC_MEM,
@@ -45,56 +41,42 @@ typedef enum		s_err
 
 typedef enum		s_type
 {
-	IRC_FREE,
-	IRC_SERVER,
-	IRC_CLIENT,
+	FD_FREE,
+	FD_SERVER,
+	FD_CLIENT,
 }					t_type;
-
-typedef enum		s_chan_state
-{
-	CHAN_FREE,
-	CHAN_USED,
-}					t_chan_state;
 
 typedef struct		s_fd
 {
 	t_type			type;
-	char			nick[MAX_NICK_SIZE + 1];
-	char			join_chan[MAX_CHAN_NB];
-	size_t			cur_timeout;
+	void			(*fct_read)();
+	void			(*fct_write)();
 	char			buff_read[IRC_BUFF_SIZE + 1];
 	char			buff_write[IRC_BUFF_SIZE + 1];
 }					t_fd;
 
-typedef struct		s_chan_buffer
+typedef struct		s_roll_buffer
 {
-	char			buffer[MAX_CHAN_LINE_BUFF][MAX_CHAN_LINE_SIZE + 1];
-	size_t			cur_line;
-}					t_chan_buffer;
-
-typedef struct		s_chan
-{
-	t_chan_state	state;
-	char			name[MAX_CHAN_NAME_SIZE + 1];
-	t_chan_buffer	buff;
-}					t_chan;
+	char			buffer[ROLL_BUFFER_SIZE];
+	size_t			begin;
+	size_t			end;
+}					t_roll_buffer;
 
 typedef struct		s_env
 {
 	t_fd			*list_fd;
-	int				maxfd;
+	int				max_fd;
 	int				port;
 	size_t			should_loop;
 	fd_set			fdset_r;
 	fd_set			fdset_w;
-	t_chan			list_chan[MAX_CHAN_NB];
-	size_t			cur_chan;
-	size_t			max_timeout;
+	int				select_max;
 }					t_env;
 
-t_err				irc_init_env(t_env *env, const char *argv);
-void				irc_init_fd(t_fd *fd);
-t_err				irc_create_server(t_env *env);
-void				irc_main_loop(t_env *env);
+t_err				srv_init_env(t_env *env, const char *argv);
+void				srv_init_fd(t_fd *fd);
+t_err				srv_create_server(t_env *env);
+void				srv_main_loop(t_env *env);
+void				srv_set_fd_select(t_env *env);
 
 #endif

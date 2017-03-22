@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   irc_init_fd.c                                      :+:      :+:    :+:   */
+/*   srv_main_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/21 15:43:11 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 15:48:31 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/22 14:52:57 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/22 14:59:36 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		irc_init_fd(t_fd *fd)
+void		srv_main_loop(t_env *env)
 {
-	fd->type = IRC_FREE;
-	ft_bzero(fd->buff_read, IRC_BUFF_SIZE + 1);
-	ft_bzero(fd->buff_write, IRC_BUFF_SIZE + 1);
+	while (env->should_loop)
+	{
+		srv_set_fd_select(env);
+		srv_do_select(env);
+		srv_check_fd_select(env);
+	}
 }

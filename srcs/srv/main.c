@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 16:09:50 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 17:39:33 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/22 14:23:49 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		print_err(const t_err code, const char *str)
 {
 	if (code == ERR_NB_ARG)
 		printf("Usage : %s <port>\n", str);
-	else if (code == ERR_ARG_NOT_INIT)
+	else if (code == ERR_ARG_NOT_INIT || code == ERR_PORT_INTERVAL)
 		printf("%s : Invalid port\n");
 	else if (code == ERR_GET_RLIM)
 		printf("%s : Error getting system limits\n");
@@ -42,10 +42,10 @@ int				main(int argc, char **argv)
 
 	if (argc != 2)
 		return (print_err(ERR_NB_ARG, argv[0]));
-	if ((err = irc_init_env(&env, argv)) != ERR_NONE)
+	if ((err = srv_init_env(&env, argv)) != ERR_NONE)
 		return (print_err(err, argv[0]));
-	if ((err = irc_create_server(&env)) != ERR_NONE)
+	if ((err = srv_create_server(&env)) != ERR_NONE)
 		return (print_err(err, argv[0]));
-	irc_main_loop(&env);
+	srv_main_loop(&env);
 	return (0);
 }

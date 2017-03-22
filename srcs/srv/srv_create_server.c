@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   irc_create_server.c                                :+:      :+:    :+:   */
+/*   srv_create_server.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 16:04:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/21 17:26:07 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/22 14:52:26 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_err		irc_create_server(t_env *env)
 		return (ERROR_BIND_SOCKET);
 	if ((listen(sock, LISTEN_SIZE)) == -1)
 		return (ERROR_LISTEN_SOCKET);
-	env->list_fd[sock].type = IRC_SERVER;
+	env->list_fd[fd_sock].type = IRC_SERVER;
+	env->list_fd[fd_sock].fct_read = srv_accept;
 	return (ERR_NONE);
 }
