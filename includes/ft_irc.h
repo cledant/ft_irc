@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 15:42:15 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/23 16:01:37 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 # include <sys/socket.h>
 # include <sys/resource.h>
 # include <sys/socket.h>
+# include <sys/time.h>
 # include <arpa/inet.h>
 # include <netdb.h>
+# include <stdio.h>
 # include "libft.h"
 
 # define IRC_BUFF_SIZE 4096
 # define LISTEN_SIZE 128
+# define ROLL_BUFFER_SIZE 4096
 
 typedef enum		s_err
 {
@@ -71,12 +74,23 @@ typedef struct		s_env
 	fd_set			fdset_r;
 	fd_set			fdset_w;
 	int				select_max;
+	int				select_do;
+	char			*file_name;
 }					t_env;
 
-t_err				srv_init_env(t_env *env, const char *argv);
-void				srv_init_fd(t_fd *fd);
+/*
+**	SERVER FUNCTIONS
+*/
+t_err				srv_init_env(t_env *env, char **argv);
+void				srv_init_fd_free(t_fd *fd);
+void				srv_init_fd_client(t_fd *fd);
 t_err				srv_create_server(t_env *env);
 void				srv_main_loop(t_env *env);
 void				srv_set_fd_select(t_env *env);
+void				srv_do_select(t_env *env);
+void				srv_check_fd_select(t_env *env);
+void				srv_accept_new_client(t_env *env, int fd_sock);
+void				srv_client_read(t_env *env, int fd_sock);
+void				srv_client_write(t_env *env, int fd_sock);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 12:32:42 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 15:43:33 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/23 16:01:31 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static inline void			init_list_fd(t_env *env)
 	i = 0;
 	while (i < (size_t)(env->max_fd))
 	{
-		irc_init_fd(&(env->list_fd[i]));
+		srv_init_fd_free(&(env->list_fd[i]));
 		i++;
 	}
 }
 
-t_err						srv_init_env(t_env *env, const char **argv)
+t_err						srv_init_env(t_env *env, char **argv)
 {
 	struct rlimit	r_lim;
 
@@ -42,5 +42,6 @@ t_err						srv_init_env(t_env *env, const char **argv)
 	init_list_fd(env);
 	env->should_loop = 1;
 	env->select_max = 0;
+	env->file_name = argv[0];
 	return (ERR_NONE);
 }

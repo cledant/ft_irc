@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_init_fd.c                                      :+:      :+:    :+:   */
+/*   srv_check_fd_select.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/21 15:43:11 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 14:17:46 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/22 17:03:44 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/23 16:07:59 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_init_fd_free(t_fd *fd)
+void		srv_check_fd_select(t_env *env)
 {
-	fd->type = FD_FREE;
-	fd->fct_read = NULL;
-	fd->ft_write = NULL;
-	ft_bzero(fd->buff_read, IRC_BUFF_SIZE + 1);
-	ft_bzero(fd->buff_write, IRC_BUFF_SIZE + 1);
+	int		c;
+
+	c = 0;
+	while (c < env->max_fd && env->select_do > 0)
+	{
+		if (FD_ISSET(c, &(env->fdset_r)))
+			env->list_fd[c].fct_read(env, c);
+		if (FD_ISSET(c, &(env->fdset_w)))
+			env->list_fd[c].fct_write(env, c);
+		if (FD_ISSET(c, &(env->fdset_r)) || FD_ISSET(c, &(env->fdset_w)))
+			(env->select_do)--;
+		c++;
+	}
 }

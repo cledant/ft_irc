@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_main_loop.c                                    :+:      :+:    :+:   */
+/*   srv_do_select.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/22 14:52:57 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 19:47:08 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/22 16:06:55 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/22 19:26:07 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_main_loop(t_env *env)
+void		srv_do_select(t_env *env)
 {
-	while (env->should_loop)
-	{
-		srv_set_fd_select(env);
-		srv_do_select(env);
-		if (env->select_do > 0)
-			srv_check_fd_select(env);
-	}
+	struct timeval		tv;
+
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	env->select_do = select(env->select_max + 1, &(env->fdset_r),
+		&(env->fdset_w), NULL, &tv);
+	if (env->select_do == -1)
+		printf("%s : Select failed !\n", env->file_name);
 }

@@ -6,13 +6,13 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 16:04:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 14:52:26 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/23 16:05:41 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-t_err		irc_create_server(t_env *env)
+t_err		srv_create_server(t_env *env)
 {
 	int					sock;
 	struct protoent		*pe;
@@ -20,16 +20,16 @@ t_err		irc_create_server(t_env *env)
 
 	if ((pe = getprotobyname("tcp")) == NULL)
 		return (ERR_UNKNOWN_PROTOCOL);
-	if ((sock = socket(PF_INET, SOCK_STREAM, pe->proto)) == -1)
+	if ((sock = socket(PF_INET, SOCK_STREAM, pe->p_proto)) == -1)
 		return (ERR_OPEN_SOCKET);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(env->port);
 	sin.sin_addr.s_addr = INADDR_ANY;
-	if ((bind(sock, (sockaddr *)&sin, sizeof(sockaddr_in))) == -1)
-		return (ERROR_BIND_SOCKET);
+	if ((bind(sock, (struct sockaddr *)&sin, sizeof(struct sockaddr_in))) == -1)
+		return (ERR_BIND_SOCKET);
 	if ((listen(sock, LISTEN_SIZE)) == -1)
-		return (ERROR_LISTEN_SOCKET);
-	env->list_fd[fd_sock].type = IRC_SERVER;
-	env->list_fd[fd_sock].fct_read = srv_accept;
+		return (ERR_LISTEN_SOCKET);
+	env->list_fd[sock].type = FD_SERVER;
+	env->list_fd[sock].fct_read = srv_accept_new_client;
 	return (ERR_NONE);
 }

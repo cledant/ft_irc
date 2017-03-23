@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_main_loop.c                                    :+:      :+:    :+:   */
+/*   srv_set_fd_select.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/22 14:52:57 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 19:47:08 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/22 15:22:48 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/23 16:09:06 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_main_loop(t_env *env)
+void	srv_set_fd_select(t_env *env)
 {
-	while (env->should_loop)
+	int		c;
+
+	c = 0;
+	env->select_max = 0;
+	FD_ZERO(&(env->fdset_r));
+	FD_ZERO(&(env->fdset_w));
+	while (c < env->max_fd)
 	{
-		srv_set_fd_select(env);
-		srv_do_select(env);
-		if (env->select_do > 0)
-			srv_check_fd_select(env);
+		if (env->list_fd[c].type == FD_CLIENT)
+		{
+			FD_SET(c, &(env->fdset_r));
+			if (ft_strlen(env->list_fd[c].buff_write) > 0)
+				FD_SET(c, &(env->fdset_w));
+			env->select_max = ft_max(c, env->select_max);
+		}
+		c++;
 	}
 }
