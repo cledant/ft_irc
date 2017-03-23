@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 15:22:48 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 16:09:06 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/23 17:30:59 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void	srv_set_fd_select(t_env *env)
 			FD_SET(c, &(env->fdset_r));
 			if (ft_strlen(env->list_fd[c].buff_write) > 0)
 				FD_SET(c, &(env->fdset_w));
+			env->select_max = ft_max(c, env->select_max);
+		}
+		else if (env->list_fd[c].type == FD_SERVER)
+		{
+			FD_SET(c, &(env->fdset_r));
 			env->select_max = ft_max(c, env->select_max);
 		}
 		c++;
