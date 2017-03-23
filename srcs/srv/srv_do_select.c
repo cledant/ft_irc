@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 16:06:55 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/22 19:26:07 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/23 18:58:03 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 void		srv_do_select(t_env *env)
 {
-	struct timeval		tv;
-
-	tv.tv_sec = 1;
-	tv.tv_usec = 0;
 	env->select_do = select(env->select_max + 1, &(env->fdset_r),
-		&(env->fdset_w), NULL, &tv);
+		&(env->fdset_w), NULL, NULL);
 	if (env->select_do == -1)
 		printf("%s : Select failed !\n", env->file_name);
 }
