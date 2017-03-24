@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 18:19:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 19:28:32 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void				cbuff_destroy(t_cbuff **cbuff);
 size_t				cbuff_enqueue(t_cbuff *cbuff, const size_t e_size);
 size_t				cbuff_dequeue(t_cbuff *cbuff, const size_t d_size);
 size_t				cbuff_dequeue_till_head_no_change(t_cbuff *cbuff);
+void				cbuff_flush(t_cbuff *cbuff);
 
 /*
 **	SERVER FUNCTIONS

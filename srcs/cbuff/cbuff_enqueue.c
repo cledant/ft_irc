@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:43:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 16:46:45 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 21:28:02 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ size_t		cbuff_enqueue(t_cbuff *cbuff, const size_t e_size)
 	{
 		ft_memcpy(cbuff->buff + cbuff->w_pos, cbuff->enqueue_buff, e_size);
 		cbuff->w_pos = (cbuff->w_pos + e_size) % cbuff->size;
+		if (cbuff->w_pos == cbuff->r_pos)
+			cbuff->overwrite = 1;
 	}
 	else
 	{

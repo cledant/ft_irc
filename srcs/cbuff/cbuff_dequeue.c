@@ -6,19 +6,18 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:24:06 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 18:20:28 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 20:57:40 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static inline size_t		get_max_dequeue_size(t_cbuff *cbuff,
-								const size_t d_size)
+static inline size_t		get_max_dequeue_size(t_cbuff *cbuff)
 {
 	size_t		max_d_size;
 
 	if (cbuff->r_pos < cbuff->w_pos)
-		max_d_size = cbuff->r_pos - cbuff->w_pos;
+		max_d_size = cbuff->w_pos - cbuff->r_pos;
 	else if (cbuff->r_pos > cbuff->w_pos)
 		max_d_size = cbuff->size - cbuff->r_pos + cbuff->w_pos;
 	else if (cbuff->r_pos == cbuff->w_pos && cbuff->overwrite == 0)
@@ -48,9 +47,9 @@ size_t						cbuff_dequeue(t_cbuff *cbuff, const size_t d_size)
 {
 	size_t		max_d_size;
 
-	if ((max_d_size = get_max_dequeue_size(cbuff, d_size)) == 0)
+	if ((max_d_size = get_max_dequeue_size(cbuff)) == 0)
 		return (0);
-	ft_bzero(cbuff->dequeue_buff, cbuff->size);
+	ft_bzero(cbuff->dequeue_buff, cbuff->size + 1);
 	if (d_size < max_d_size)
 		max_d_size = d_size;
 	if (cbuff->w_pos > cbuff->r_pos)
