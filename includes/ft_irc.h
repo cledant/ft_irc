@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 20:03:34 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 17:58:01 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@
 # include <stdio.h>
 # include "libft.h"
 
-# define IRC_BUFF_SIZE 4096
+# define MAX_PACKET_SIZE 1024
+# define MAX_MSG_LEN 512
 # define LISTEN_SIZE 128
 # define MAX_NICK_LEN 9
 # define MAX_NB_CHAN 128
-# define MAX_CHAN_NAME_LEN 128
+# define MAX_CHAN_NAME_LEN 50
+# define BEGIN_PACKET ":"
+# define END_PACKET "\r\n"
+# define CBUFF_SIZE 4096
 
 typedef enum		s_err
 {
@@ -57,15 +61,25 @@ typedef enum		s_chan_state
 	CHAN_FREE,
 }					t_chan_state;
 
+typedef struct		s_cbuffer
+{
+	size_t			size;
+	size_t			r_pos;
+	size_t			w_pos;
+	size_t			overwrite;
+	char			*buff;
+	char			*enqueue_buff;
+	char			*dequeue_buff;
+}					t_cbuffer;
+
 typedef struct		s_fd
 {
 	t_type			type;
 	char			nick[MAX_NICK_LEN + 1];
-	char			join_chan[MAX_NB_CHAN];
+	char			joined_chan[MAX_NB_CHAN];
 	void			(*fct_read)();
 	void			(*fct_write)();
-	char			buff_read[IRC_BUFF_SIZE + 1];
-	char			buff_write[IRC_BUFF_SIZE + 1];
+	t_cbuffer		*cbuffer;
 }					t_fd;
 
 typedef	struct		s_chan
@@ -88,6 +102,15 @@ typedef struct		s_env
 	char			*file_name;
 	t_chan			list_chan[MAX_NB_CHAN];
 }					t_env;
+
+/*
+**	CIRCULAR BUFFER
+*/
+t_cbuff				*cbuff_create(const size_t buff_size);
+void				cbuff_destroy(t_cbuff **cbuff);
+size_t				cbuff_enqueue(t_cbuff *cbuff, const size_t e_size);
+size_t				cbuff_dequeue(t_cbuff *cbuff, const size_t d_size);
+size_t				cbuff_dequeue_till_head_no_change(t_cbuff *cbuff);
 
 /*
 **	SERVER FUNCTIONS
