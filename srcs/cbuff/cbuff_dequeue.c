@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:24:06 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 17:51:55 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 18:20:28 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static inline void			cpy_not_contigous(t_cbuff *cbuff, const size_t size)
 	size_t		second_half;
 
 	if ((cbuff->r_pos + size - 1) <= (cbuff->size - 1))
-		ft_memcpy(cbuff->dequeue_buff, cbuff->buffer + cbuff->r_pos, size);
+		ft_memcpy(cbuff->dequeue_buff, cbuff->buff + cbuff->r_pos, size);
 	else
 	{
 		first_half = cbuff->size - cbuff->r_pos;
 		second_half = cbuff->w_pos;
-		ft_memcpy(cbuff->dequeue_buff, cbuff->buffer + cbuff->r_pos, first_half);
-		ft_memcpy(cbuff->dequeue_buff + first_half, cbuff->buffer, second_half);
+		ft_memcpy(cbuff->dequeue_buff, cbuff->buff + cbuff->r_pos, first_half);
+		ft_memcpy(cbuff->dequeue_buff + first_half, cbuff->buff, second_half);
 	}
 }
 

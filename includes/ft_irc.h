@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 17:58:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/24 18:19:01 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef enum		s_chan_state
 	CHAN_FREE,
 }					t_chan_state;
 
-typedef struct		s_cbuffer
+typedef struct		s_cbuff
 {
 	size_t			size;
 	size_t			r_pos;
@@ -70,7 +70,7 @@ typedef struct		s_cbuffer
 	char			*buff;
 	char			*enqueue_buff;
 	char			*dequeue_buff;
-}					t_cbuffer;
+}					t_cbuff;
 
 typedef struct		s_fd
 {
@@ -79,7 +79,7 @@ typedef struct		s_fd
 	char			joined_chan[MAX_NB_CHAN];
 	void			(*fct_read)();
 	void			(*fct_write)();
-	t_cbuffer		*cbuffer;
+	t_cbuff			*cbuff;
 }					t_fd;
 
 typedef	struct		s_chan
