@@ -6,21 +6,35 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 12:32:42 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 16:01:31 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 18:19:00 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static inline void			init_list_fd(t_env *env)
+static inline int			init_list_fd(t_env *env)
 {
 	size_t		i;
 
 	i = 0;
 	while (i < (size_t)(env->max_fd))
 	{
-		srv_init_fd_free(&(env->list_fd[i]));
+		if (srv_init_fd_free(&(env->list_fd[i]), SET) == 0)
+			return (0);
 		i++;
+	}
+	return (1);
+}
+
+static inline void			init_list_chan(t_env *env)
+{
+	size_t		c;
+
+	c = 0;
+	while (c < MAX_NB_CHAN)
+	{
+		srv_init_chan_free(&(env->list_chan[c]));
+		c++;
 	}
 }
 
@@ -39,9 +53,12 @@ t_err						srv_init_env(t_env *env, char **argv)
 		return (ERR_MAX_FD);
 	if ((env->list_fd = (t_fd *)malloc(sizeof(t_fd) * env->max_fd)) == NULL)
 		return (ERR_ALLOC_MEM);
-	init_list_fd(env);
+	if (init_list_fd(env) == 0)
+		return (ERR_ALLOC_MEM);
+	init_list_chan(env);
 	env->should_loop = 1;
 	env->select_max = 0;
+	env->select_do = 0;
 	env->file_name = argv[0];
 	return (ERR_NONE);
 }

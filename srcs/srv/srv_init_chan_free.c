@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_client_write.c                                 :+:      :+:    :+:   */
+/*   srv_init_chan_free.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/22 20:02:39 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 18:48:50 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/25 14:07:39 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/25 14:11:53 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_client_write(t_env *env, int fd_sock)
+void		srv_init_chan_free(t_chan *chan)
 {
-	cbuff_dequeue(env->list_fd[fd_sock].cbuff_write, CBUFF_SIZE);
-	send(fd_sock, env->list_fd[fd_sock].cbuff_write->dequeue_buff,
-		ft_strlen(env->list_fd[fd_sock].cbuff_write->dequeue_buff), 0);
-
+	chan->state = CHAN_FREE;
+	ft_bzero(chan->name, MAX_CHAN_NAME_LEN + 1);
+	chan->nb_user = 0;
 }

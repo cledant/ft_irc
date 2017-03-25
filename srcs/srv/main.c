@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 16:09:50 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 16:00:25 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 14:13:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int				main(int argc, char **argv)
 		return (print_err(err, argv[0]));
 	if ((err = srv_create_server(&env)) != ERR_NONE)
 		return (print_err(err, argv[0]));
+	printf("%s : Ready !\n", argv[0]);
 	srv_main_loop(&env);
 	return (0);
 }

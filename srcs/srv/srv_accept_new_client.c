@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:28:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 17:30:50 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 15:31:40 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	srv_accept_new_client(t_env *env, int fd_sock)
 	}
 	printf("%s : New client ! ID : %d from %s: %d\n", env->file_name, new_sock,
 		inet_ntoa(sock_in.sin_addr), ntohs(sock_in.sin_port));
-	srv_init_fd_client(&(env->list_fd[new_sock]));
+	srv_init_fd_client(env, new_sock);
 }

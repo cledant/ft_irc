@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 11:40:27 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 18:11:11 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MAX_CHAN_NAME_LEN 50
 # define BEGIN_PACKET ":"
 # define END_PACKET "\r\n"
-# define CBUFF_SIZE 4096
+# define CBUFF_SIZE 8192
 
 typedef enum		s_err
 {
@@ -61,6 +61,12 @@ typedef enum		s_chan_state
 	CHAN_FREE,
 }					t_chan_state;
 
+typedef enum		s_switch
+{
+	SET,
+	RESET,
+}					t_switch;
+
 typedef struct		s_cbuff
 {
 	size_t			size;
@@ -80,13 +86,14 @@ typedef struct		s_fd
 	char			joined_chan[MAX_NB_CHAN];
 	void			(*fct_read)();
 	void			(*fct_write)();
-	t_cbuff			*cbuff;
+	t_cbuff			*cbuff_read;
+	t_cbuff			*cbuff_write;
 }					t_fd;
 
 typedef	struct		s_chan
 {
 	t_chan_state	state;
-	char			name[MAX_CHAN_NAME_LEN];
+	char			name[MAX_CHAN_NAME_LEN + 1];
 	size_t			nb_user;
 }					t_chan;
 
@@ -118,8 +125,9 @@ void				cbuff_flush(t_cbuff *cbuff);
 **	SERVER FUNCTIONS
 */
 t_err				srv_init_env(t_env *env, char **argv);
-void				srv_init_fd_free(t_fd *fd);
-void				srv_init_fd_client(t_fd *fd);
+int					srv_init_fd_free(t_fd *fd, const t_switch type);
+void				srv_init_fd_client(t_env *env, const int fd_sock);
+void				srv_init_chan_free(t_chan *chan);
 t_err				srv_create_server(t_env *env);
 void				srv_main_loop(t_env *env);
 void				srv_set_fd_select(t_env *env);
@@ -128,5 +136,13 @@ void				srv_check_fd_select(t_env *env);
 void				srv_accept_new_client(t_env *env, int fd_sock);
 void				srv_client_read(t_env *env, int fd_sock);
 void				srv_client_write(t_env *env, int fd_sock);
+int					srv_set_first_nick(t_env *env, const int fd_sock);
+int					srv_is_nick_free(t_env *env, const int fd_sock,
+						const char *nick);
+
+/*
+** SERVER COMUNICATION FUNCTION
+*/
+int					srv_com_write_welcome(t_env *env, const int fd_sock);
 
 #endif

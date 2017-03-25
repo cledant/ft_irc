@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 20:07:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 19:56:49 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 18:57:34 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ void		srv_client_read(t_env *env, int fd_sock)
 {
 	int		rvd;
 
-	if ((rvd = recv(fd_sock, env->list_fd[fd_sock].buff_read,
-			IRC_BUFF_SIZE, 0)) <= 0)
+	if ((rvd = recv(fd_sock, env->list_fd[fd_sock].cbuff_read->enqueue_buff,
+			CBUFF_SIZE, 0)) <= 0)
 	{
 		close(fd_sock);
-		srv_init_fd_free(&(env->list_fd[fd_sock]));
+		srv_init_fd_free(&(env->list_fd[fd_sock]), RESET);
 		printf("%s : Client ID : %d disconnected !\n", env->file_name, fd_sock);
 		return ;
 	}
-	printf("%s : Client ID : %d sent a packet of %d bytes !\n", env->file_name,
-		fd_sock, rvd);
+	printf("%s : Client ID : %d sent a packet of %d bytes ! Content :%s\n",
+		env->file_name, fd_sock, rvd,
+		env->list_fd[fd_sock].cbuff_read->enqueue_buff);
+	cbuff_enqueue(env->list_fd[fd_sock].cbuff_read, rvd);
 }
