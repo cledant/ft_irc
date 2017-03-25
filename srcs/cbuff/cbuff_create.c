@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 14:18:24 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 19:55:24 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 11:04:39 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ static inline void		init_buffers(t_cbuff *new_buffer,
 	ft_bzero(new_buffer->buff, buff_size + 1);
 	ft_bzero(new_buffer->enqueue_buff, buff_size + 1);
 	ft_bzero(new_buffer->dequeue_buff, buff_size + 1);
+	new_buffer->r_pos = 0;
+	new_buffer->w_pos = 0;
+	new_buffer->overwrite = 0;
+	new_buffer->size = buff_size;
+	new_buffer->enqueue_cumul = 0;
 }
 
 t_cbuff					*cbuff_create(const size_t buff_size)
@@ -47,16 +52,16 @@ t_cbuff					*cbuff_create(const size_t buff_size)
 		return (clean_fail(new_cbuff, new_cbuff->buff, NULL, NULL));
 	if ((new_cbuff->enqueue_buff = (char *)malloc(sizeof(char) *
 			(buff_size + 1))) == NULL)
+	{
 		return (clean_fail(new_cbuff, new_cbuff->buff, new_cbuff->enqueue_buff,
-					NULL));
+			NULL));
+	}
 	if ((new_cbuff->dequeue_buff = (char *)malloc(sizeof(char) *
 			(buff_size + 1))) == NULL)
+	{
 		return (clean_fail(new_cbuff, new_cbuff->buff, new_cbuff->enqueue_buff,
-					new_cbuff->dequeue_buff));
+			new_cbuff->dequeue_buff));
+	}
 	init_buffers(new_cbuff, buff_size);
-	new_cbuff->r_pos = 0;
-	new_cbuff->w_pos = 0;
-	new_cbuff->overwrite = 0;
-	new_cbuff->size = buff_size;
 	return (new_cbuff);
 }

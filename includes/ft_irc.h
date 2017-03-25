@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 19:28:32 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 11:40:27 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct		s_cbuff
 	size_t			size;
 	size_t			r_pos;
 	size_t			w_pos;
+	size_t			enqueue_cumul;
 	size_t			overwrite;
 	char			*buff;
 	char			*enqueue_buff;
@@ -104,7 +105,7 @@ typedef struct		s_env
 }					t_env;
 
 /*
-**	CIRCULAR BUFFER
+**	CIRCULAR BUFFER FUNCTIONS
 */
 t_cbuff				*cbuff_create(const size_t buff_size);
 void				cbuff_destroy(t_cbuff **cbuff);

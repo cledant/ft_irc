@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 19:28:57 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/24 19:31:45 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/25 10:52:13 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,5 @@ void	cbuff_flush(t_cbuff *cbuff)
 	cbuff->r_pos = 0;
 	cbuff->w_pos = 0;
 	cbuff->overwrite = 0;
+	cbuff->enqueue_cumul = 0;
 }

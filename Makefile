@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/03/23 16:43:31 by cledant          ###   ########.fr        #
+#    Updated: 2017/03/25 11:39:14 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ OBJ_DIR_NAME = obj
 OBJ_DIR_NAME_SERVEUR = $(OBJ_DIR_NAME)/srv
 
 OBJ_DIR_NAME_CLIENT = $(OBJ_DIR_NAME)/clnt
+
+OBJ_DIR_NAME_CBUFF = $(OBJ_DIR_NAME)/cbuff
 
 LIBS = -lft
 
@@ -47,15 +49,22 @@ OBJ_SRCS_CLIENT = $(SRCS_NAME_CLIENT:%.c=$(OBJ_DIR_NAME_CLIENT)/%.o)
 
 NAME_CLIENT = client
 
+SRCS_NAME_CBUFF = cbuff_create.c cbuff_destroy.c cbuff_flush.c cbuff_enqueue.c \
+				  cbuff_dequeue.c cbuff_dequeue_till_head_no_change.c
+
+SRCS_PATH_CBUFF = ./srcs/cbuff
+
+OBJ_SRCS_CBUFF = $(SRCS_NAME_CBUFF:%.c=$(OBJ_DIR_NAME_CBUFF)/%.o)
+
 all : libft $(NAME_SERVEUR) $(NAME_CLIENT)
 
 libft :
 	make -C $(LIBFT_PATH)
 
-$(NAME_SERVEUR) : $(OBJ_SRCS_SERVEUR)
+$(NAME_SERVEUR) : $(OBJ_SRCS_SERVEUR) $(OBJ_SRCS_CBUFF)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -L$(LIBFT_PATH)
 
-$(NAME_CLIENT) : $(OBJ_SRCS_CLIENT)
+$(NAME_CLIENT) : $(OBJ_SRCS_CLIENT) $(OBJ_SRCS_CBUFF)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -L$(LIBFT_PATH)
 
 $(OBJ_DIR_NAME_SERVEUR)/%.o : $(SRCS_PATH_SERVEUR)/%.c
@@ -64,6 +73,10 @@ $(OBJ_DIR_NAME_SERVEUR)/%.o : $(SRCS_PATH_SERVEUR)/%.c
 
 $(OBJ_DIR_NAME_CLIENT)/%.o : $(SRCS_PATH_CLIENT)/%.c
 	mkdir -p $(OBJ_DIR_NAME_CLIENT)
+	$(CC) -o $@ -c $< $(CFLAGS) -I$(INCLUDES) -I$(INCLUDES_LIBFT)
+
+$(OBJ_DIR_NAME_CBUFF)/%.o : $(SRCS_PATH_CBUFF)/%.c
+	mkdir -p $(OBJ_DIR_NAME_CBUFF)
 	$(CC) -o $@ -c $< $(CFLAGS) -I$(INCLUDES) -I$(INCLUDES_LIBFT)
 
 clean :
