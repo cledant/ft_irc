@@ -52,7 +52,8 @@ OBJ_SRCS_CLIENT = $(SRCS_NAME_CLIENT:%.c=$(OBJ_DIR_NAME_CLIENT)/%.o)
 NAME_CLIENT = client
 
 SRCS_NAME_CBUFF = cbuff_create.c cbuff_destroy.c cbuff_flush.c cbuff_enqueue.c \
-				  cbuff_dequeue.c cbuff_dequeue_till_head_no_change.c
+				  cbuff_dequeue.c cbuff_dequeue_till_head_no_change.c \
+					cbuff_move_forward_read_head.c
 
 SRCS_PATH_CBUFF = ./srcs/cbuff
 

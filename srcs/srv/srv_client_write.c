@@ -14,8 +14,11 @@
 
 void		srv_client_write(t_env *env, int fd_sock)
 {
-	cbuff_dequeue(env->list_fd[fd_sock].cbuff_write, CBUFF_SIZE);
-	send(fd_sock, env->list_fd[fd_sock].cbuff_write->dequeue_buff,
-		ft_strlen(env->list_fd[fd_sock].cbuff_write->dequeue_buff), 0);
+	size_t		sent;
 
+
+	cbuff_dequeue_till_head_no_change(env->list_fd[fd_sock].cbuff_write);
+	sent = send(fd_sock, env->list_fd[fd_sock].cbuff_write->dequeue_buff,
+		ft_strlen(env->list_fd[fd_sock].cbuff_write->dequeue_buff), 0);
+	cbuff_move_forward_read_head(env->list_fd[fd_sock].cbuff_write, sent);
 }

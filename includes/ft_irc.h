@@ -120,6 +120,8 @@ size_t				cbuff_enqueue(t_cbuff *cbuff, const size_t e_size);
 size_t				cbuff_dequeue(t_cbuff *cbuff, const size_t d_size);
 size_t				cbuff_dequeue_till_head_no_change(t_cbuff *cbuff);
 void				cbuff_flush(t_cbuff *cbuff);
+void				cbuff_move_forward_read_head(t_cbuff *cbuff,
+						const size_t f_size);
 
 /*
 **	SERVER FUNCTIONS
