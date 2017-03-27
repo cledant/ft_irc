@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/27 15:14:05 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 22:21:10 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,19 @@ typedef enum		e_target
 {
 	TARGET_CHAN,
 	TARGET_USER,
+	ALL_CHAN_WITH_CUR_USER,
 }					t_target;
+
+typedef enum		e_func
+{
+	NICK,
+	JOIN,
+	PART,
+	NAMES,
+	PRIVMSG,
+	WELCOME,
+	SMSG,
+}					t_func;
 
 typedef struct		s_cbuff
 {
@@ -112,11 +124,11 @@ typedef	struct		s_chan
 typedef struct					s_cmd
 {
 	char[MAX_PACKET_SIZE + 1]	cmd;
+	t_func						function;
 	int							fd_sender;
 	t_target					target;
 	char						id_chan;
 	int							fd_target;
-	char[MAX_MSG_LEN + 1]		msg_rcvd;
 }								t_cmd;
 
 typedef struct		s_env
@@ -165,7 +177,11 @@ int					srv_set_first_nick(t_env *env, const int fd_sock);
 int					srv_is_nick_free(t_env *env, const int fd_sock,
 						const char *nick);
 void				srv_interpret_new_data(t_env *env);
-void				src_disconenct_client(t_env *env, int fd_sock);
+void				srv_disconenct_client(t_env *env, int fd_sock);
+int					srv_create_cmd(t_env *env, const int fd_sock, t_cmd *cmd);
+int					srv_is_cmd_valid(const char *cmd, t_cmd *cmd);
+int					srv_cmd_nick(t_cmd *cmd, char *begin, char *end);
+int					srv_cmd_join(t_cmd *cmd, char *begin, char *end);
 
 /*
 ** SERVER COMUNICATION FUNCTION
