@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 12:32:42 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 18:19:00 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 10:20:52 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_err						srv_init_env(t_env *env, char **argv)
 	if ((env->list_fd = (t_fd *)malloc(sizeof(t_fd) * env->max_fd)) == NULL)
 		return (ERR_ALLOC_MEM);
 	if (init_list_fd(env) == 0)
+		return (ERR_ALLOC_MEM);
+	if ((env->new_data = ft_strnew(env->max_fd)) == NULL)
 		return (ERR_ALLOC_MEM);
 	init_list_chan(env);
 	env->should_loop = 1;

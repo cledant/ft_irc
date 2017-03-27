@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/03/25 18:07:55 by cledant          ###   ########.fr        #
+#    Updated: 2017/03/27 15:11:24 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS_NAME_SERVEUR = main.c srv_client_write.c srv_init_fd_client.c \
 					srv_check_fd_select.c srv_do_select.c srv_main_loop.c \
 					srv_client_read.c srv_init_env.c srv_set_fd_select.c \
 					srv_init_chan_free.c srv_set_first_nick.c srv_is_nick_free.c \
-					srv_com_write_welcome.c
+					srv_com_write_welcome.c srv_interpret_new_data.c \
+					srv_disconnect_client.c
 
 SRCS_PATH_SERVEUR = ./srcs/srv
 
@@ -53,7 +54,7 @@ NAME_CLIENT = client
 
 SRCS_NAME_CBUFF = cbuff_create.c cbuff_destroy.c cbuff_flush.c cbuff_enqueue.c \
 				  cbuff_dequeue.c cbuff_dequeue_till_head_no_change.c \
-					cbuff_move_forward_read_head.c
+				  cbuff_move_forward_read_head.c
 
 SRCS_PATH_CBUFF = ./srcs/cbuff
 

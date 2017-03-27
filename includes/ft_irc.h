@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 18:11:11 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 15:14:05 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@
 # define END_PACKET "\r\n"
 # define CBUFF_SIZE 8192
 
-typedef enum		s_err
+# define NEW_DATA 1
+# define NO_DATA 0
+
+typedef enum		e_err
 {
 	ERR_NB_ARG,
 	ERR_ARG_NOT_INT,
@@ -45,27 +48,36 @@ typedef enum		s_err
 	ERR_OPEN_SOCKET,
 	ERR_BIND_SOCKET,
 	ERR_LISTEN_SOCKET,
+	ERR_CLOSE_DISCONNECTED,
+	ERR_CLOSE_OVERWRITE,
+	ERR_CLOSE_INIT_NAME,
 	ERR_NONE,
 }					t_err;
 
-typedef enum		s_type
+typedef enum		e_type
 {
 	FD_FREE,
 	FD_SERVER,
 	FD_CLIENT,
 }					t_type;
 
-typedef enum		s_chan_state
+typedef enum		e_chan_state
 {
 	CHAN_IN_USE,
 	CHAN_FREE,
 }					t_chan_state;
 
-typedef enum		s_switch
+typedef enum		e_switch
 {
 	SET,
 	RESET,
 }					t_switch;
+
+typedef enum		e_target
+{
+	TARGET_CHAN,
+	TARGET_USER,
+}					t_target;
 
 typedef struct		s_cbuff
 {
@@ -97,9 +109,20 @@ typedef	struct		s_chan
 	size_t			nb_user;
 }					t_chan;
 
+typedef struct					s_cmd
+{
+	char[MAX_PACKET_SIZE + 1]	cmd;
+	int							fd_sender;
+	t_target					target;
+	char						id_chan;
+	int							fd_target;
+	char[MAX_MSG_LEN + 1]		msg_rcvd;
+}								t_cmd;
+
 typedef struct		s_env
 {
 	t_fd			*list_fd;
+	char			*new_data;
 	int				max_fd;
 	int				port;
 	size_t			should_loop;
@@ -141,6 +164,8 @@ void				srv_client_write(t_env *env, int fd_sock);
 int					srv_set_first_nick(t_env *env, const int fd_sock);
 int					srv_is_nick_free(t_env *env, const int fd_sock,
 						const char *nick);
+void				srv_interpret_new_data(t_env *env);
+void				src_disconenct_client(t_env *env, int fd_sock);
 
 /*
 ** SERVER COMUNICATION FUNCTION

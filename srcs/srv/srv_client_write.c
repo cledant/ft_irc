@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 20:02:39 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 18:48:50 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 10:02:22 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void		srv_client_write(t_env *env, int fd_sock)
 {
 	size_t		sent;
-
 
 	cbuff_dequeue_till_head_no_change(env->list_fd[fd_sock].cbuff_write);
 	sent = send(fd_sock, env->list_fd[fd_sock].cbuff_write->dequeue_buff,

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 16:04:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/23 16:05:41 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 09:18:37 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_err		srv_create_server(t_env *env)
 		return (ERR_UNKNOWN_PROTOCOL);
 	if ((sock = socket(PF_INET, SOCK_STREAM, pe->p_proto)) == -1)
 		return (ERR_OPEN_SOCKET);
+	if (sock >= env->max_fd)
+	{
+		close(sock);
+		return (ERR_OPEN_SOCKET);
+	}
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(env->port);
 	sin.sin_addr.s_addr = INADDR_ANY;

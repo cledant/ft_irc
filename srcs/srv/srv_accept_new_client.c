@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 17:28:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 15:31:40 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/27 09:59:10 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void	srv_accept_new_client(t_env *env, int fd_sock)
 		== -1)
 	{
 		printf("%s : Failed to connect new client !\n", env->file_name);
+		return ;
+	}
+	if (new_sock >= env->max_fd)
+	{
+		close(new_sock);
+		printf("%s : Max user reached !\n", env->file_name);
 		return ;
 	}
 	printf("%s : New client ! ID : %d from %s: %d\n", env->file_name, new_sock,
