@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_interpret_new_data.c                           :+:      :+:    :+:   */
+/*   srv_has_sender_target_common_chan.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/27 10:25:00 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 13:43:24 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/28 13:12:08 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/28 14:12:54 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void	srv_interpret_new_data(t_env *env)
+int		srv_has_sender_target_common_chan(t_env *env, const int fd_target,
+			const int fd_sender)
 {
-	size_t		i;
-	t_cmd		cmd;
+	size_t		c;
 
-	i = 0;
-	while (i < (size_t)env->max_fd)
+	c = 0;
+	while (c < MAX_NB_CHAN)
 	{
-		if (env->new_data[i] == FD_NEW_DATA)
-		{
-			if (env->list_fd[i].cbuff_read->overwrite == 1)
-				srv_disconnect_client(env, i, ERR_CLOSE_OVERWRITE);
-			else
-			{
-				while (srv_create_cmd(env, i, &cmd) == 1)
-					srv_execute_cmd(env, &cmd);
-			}
-			env->new_data[i] = FD_NO_DATA;
-		}
-		i++;
+		if (env->list_fd[fd_target].joined_chan[c] == 1 &&
+				env->list_fd[fd_sender].joined_chan[c] == 1)
+			return (1);
+		c++;
 	}
+	return (0);
 }

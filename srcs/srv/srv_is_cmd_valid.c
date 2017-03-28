@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:01:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 10:00:17 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 13:36:38 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ static inline int		set_enum(t_cmd *cmd, const t_func func)
 	return (1);
 }
 
-int						srv_is_cmd_valid(const char *cmd, t_cmd *cmd)
+int						srv_is_cmd_valid(const char *cmd_str, t_cmd *cmd)
 {
-	if (ft_strcmp(cmd, "NICK") == 0)
+	if (ft_strcmp(cmd_str, "NICK") == 0)
 		return (set_enum(cmd, NICK));
-	else if (ft_strcmp(cmd, "JOIN") == 0)
+	else if (ft_strcmp(cmd_str, "JOIN") == 0)
 		return (set_enum(cmd, JOIN));
-	else if (ft_strcmp(cmd, "PART") == 0)
+	else if (ft_strcmp(cmd_str, "PART") == 0)
 		return (set_enum(cmd, PART));
-	else if (ft_strcmp(cmd, "NAMES") == 0)
+	else if (ft_strcmp(cmd_str, "NAMES") == 0)
 		return (set_enum(cmd, NAMES));
-	else if (ft_strcmp(cmd, "PRIVMSG") == 0)
+	else if (ft_strcmp(cmd_str, "PRIVMSG") == 0)
 		return (set_enum(cmd, PRIVMSG));
-	else if (ft_strcmp(cmd, "WELCOME") == 0)
+	else if (ft_strcmp(cmd_str, "WELCOME") == 0)
 		return (set_enum(cmd, WELCOME));
-	else if (ft_strcmp(cmd, "SMSG") == 0)
+	else if (ft_strcmp(cmd_str, "SMSG") == 0)
 		return (set_enum(cmd, SMSG));
 	ft_puts("Invalid command received !");
 	return (0);
