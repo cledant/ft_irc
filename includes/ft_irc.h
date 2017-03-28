@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/27 22:21:10 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 12:02:51 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef enum		e_target
 {
 	TARGET_CHAN,
 	TARGET_USER,
-	ALL_CHAN_WITH_CUR_USER,
+	ONE_TIME_TO_USER_WITH_COMMON_CHAN,
 }					t_target;
 
 typedef enum		e_func
@@ -180,8 +180,11 @@ void				srv_interpret_new_data(t_env *env);
 void				srv_disconenct_client(t_env *env, int fd_sock);
 int					srv_create_cmd(t_env *env, const int fd_sock, t_cmd *cmd);
 int					srv_is_cmd_valid(const char *cmd, t_cmd *cmd);
-int					srv_cmd_nick(t_cmd *cmd, char *begin, char *end);
-int					srv_cmd_join(t_cmd *cmd, char *begin, char *end);
+int					srv_cmd_nick(t_cmd *cmd, char *begin, char *end,
+						const int fd_sock);
+int					srv_cmd_join(t_cmd *cmd, char *begin, char *end,
+						const int fd_sock);
+void				srv_execute_cmd(t_env *env, t_cmd *cmd);
 
 /*
 ** SERVER COMUNICATION FUNCTION

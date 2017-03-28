@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:01:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/27 21:43:03 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 10:00:17 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int						srv_is_cmd_valid(const char *cmd, t_cmd *cmd)
 		return (set_enum(cmd, WELCOME));
 	else if (ft_strcmp(cmd, "SMSG") == 0)
 		return (set_enum(cmd, SMSG));
-	ft_puts("Invalid command send !");
+	ft_puts("Invalid command received !");
 	return (0);
 }
