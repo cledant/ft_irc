@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 14:15:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 17:54:02 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ typedef enum		e_target
 {
 	TARGET_CHAN,
 	TARGET_USER,
+	TARGET_SENDER,
 	ONE_TIME_TO_USER_WITH_COMMON_CHAN,
+	NO_TARGET,
 }					t_target;
 
 typedef enum		e_func
@@ -89,6 +91,7 @@ typedef enum		e_func
 	PRIVMSG,
 	WELCOME,
 	SMSG,
+	NO_FUNCTION,
 }					t_func;
 
 typedef struct		s_cbuff
@@ -121,15 +124,15 @@ typedef	struct		s_chan
 	size_t			nb_user;
 }					t_chan;
 
-typedef struct					s_cmd
+typedef struct		s_cmd
 {
-	char						cmd[MAX_PACKET_SIZE + 1];
-	t_func						function;
-	int							fd_sender;
-	t_target					target;
-	char						id_chan;
-	int							fd_target;
-}								t_cmd;
+	t_func			function;
+	t_target		target;
+	int				fd_sender;
+	int				fd_target;
+	char			id_chan;
+	char			cmd[MAX_PACKET_SIZE + 1];
+}					t_cmd;
 
 typedef struct		s_env
 {
@@ -194,5 +197,6 @@ int					srv_has_sender_target_common_chan(t_env *env,
 */
 int					srv_com_write_welcome(t_env *env, const int fd_sock);
 void				srv_com_one_time_common_chan(t_env *env, t_cmd *cmd);
+void				srv_com_send_to_sender(t_env *env, t_cmd *cmd);
 
 #endif

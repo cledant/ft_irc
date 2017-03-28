@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 14:06:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 16:13:34 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static inline int		get_cmd(const int fd_sock, const char *begin,
 		return (0);
 	if ((space = ft_strnstr(begin, " ", size)) == NULL)
 		return (0);
-	if ((cmd_str = ft_strnew(space - 1 - begin + 1)) == NULL)
+	if ((cmd_str = ft_strnew(space - 1 - begin)) == NULL)
 	{
 		ft_puts("Memory allocation error");
 		return (0);
 	}
-	ft_memcpy(cmd_str, begin + 1, space - 1 - begin + 1);
+	ft_memcpy(cmd_str, begin + 1, space - 1 - begin);
 	if (srv_is_cmd_valid(cmd_str, cmd) == 0)
 	{
 		free(cmd_str);

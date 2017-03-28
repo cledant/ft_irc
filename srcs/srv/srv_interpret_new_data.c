@@ -6,13 +6,23 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 10:25:00 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 13:43:24 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 17:55:05 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void	srv_interpret_new_data(t_env *env)
+static inline void		init_cmd(t_cmd *cmd)
+{
+	cmd->target = NO_TARGET;
+	cmd->function = NO_FUNCTION;
+	cmd->fd_target = -1;
+	cmd->fd_sender = -1;
+	cmd->id_chan = -1;
+	ft_bzero(cmd->cmd, MAX_PACKET_SIZE + 1);
+}
+
+void					srv_interpret_new_data(t_env *env)
 {
 	size_t		i;
 	t_cmd		cmd;
@@ -20,6 +30,7 @@ void	srv_interpret_new_data(t_env *env)
 	i = 0;
 	while (i < (size_t)env->max_fd)
 	{
+		init_cmd(&cmd);
 		if (env->new_data[i] == FD_NEW_DATA)
 		{
 			if (env->list_fd[i].cbuff_read->overwrite == 1)
@@ -27,7 +38,10 @@ void	srv_interpret_new_data(t_env *env)
 			else
 			{
 				while (srv_create_cmd(env, i, &cmd) == 1)
+				{
 					srv_execute_cmd(env, &cmd);
+					init_cmd(&cmd);
+				}
 			}
 			env->new_data[i] = FD_NO_DATA;
 		}

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 14:08:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 17:34:10 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static int				set_error(t_cmd *cmd, const int fd_sock)
 {
 	cmd->function = SMSG;
-	cmd->target = TARGET_USER;
+	cmd->target = TARGET_SENDER;
 	cmd->id_chan = -1;
-	cmd->fd_target = fd_sock;
+	cmd->fd_target = -1;
 	cmd->fd_sender = fd_sock;
 	ft_strcat(cmd->cmd, BEGIN_PACKET);
 	ft_strcat(cmd->cmd, "SMSG Invalid Nick !");

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 20:07:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 13:38:41 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 15:48:58 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		srv_client_read(t_env *env, int fd_sock)
 		srv_disconnect_client(env, fd_sock, ERR_CLOSE_DISCONNECTED);
 		return ;
 	}
-	printf("%s : Client ID : %d sent a packet of %d bytes ! Content :%s\n",
+	printf("%s : Client ID : %d sent a packet of %d bytes ! Content :\n%s\n",
 		env->file_name, fd_sock, rvd,
 		env->list_fd[fd_sock].cbuff_read->enqueue_buff);
 	cbuff_enqueue(env->list_fd[fd_sock].cbuff_read, rvd);

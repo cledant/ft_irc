@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 16:24:06 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 11:25:20 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/28 16:07:04 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ size_t						cbuff_dequeue(t_cbuff *cbuff, const size_t d_size)
 {
 	size_t		max_d_size;
 
+	ft_bzero(cbuff->dequeue_buff, cbuff->size + 1);
 	if ((max_d_size = get_max_dequeue_size(cbuff)) == 0)
 		return (0);
-	ft_bzero(cbuff->dequeue_buff, cbuff->size + 1);
 	if (d_size < max_d_size)
 		max_d_size = d_size;
 	if (cbuff->w_pos > cbuff->r_pos)
