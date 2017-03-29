@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 17:54:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:19:36 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,12 @@ typedef struct		s_env
 	t_chan			list_chan[MAX_NB_CHAN];
 }					t_env;
 
+typedef struct		s_cmd_arg
+{
+	char			*begin;
+	char			*end;
+}					t_cmd_arg;
+
 /*
 **	CIRCULAR BUFFER FUNCTIONS
 */
@@ -184,13 +190,12 @@ void				srv_disconnect_client(t_env *env, const int fd_sock,
 						const t_err err);
 int					srv_create_cmd(t_env *env, const int fd_sock, t_cmd *cmd);
 int					srv_is_cmd_valid(const char *cmd_str, t_cmd *cmd);
-int					srv_cmd_nick(t_cmd *cmd, const char *begin,
-						const char *end, const int fd_sock);
-int					srv_cmd_join(t_cmd *cmd, char *begin, char *end,
+int					srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 void				srv_execute_cmd(t_env *env, t_cmd *cmd);
 int					srv_has_sender_target_common_chan(t_env *env,
 						const int fd_target, const int fd_sender);
+int					srv_is_str_a_cmd(const char *str);
 
 /*
 ** SERVER COMUNICATION FUNCTION

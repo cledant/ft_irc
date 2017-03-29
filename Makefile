@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/03/28 22:20:32 by cledant          ###   ########.fr        #
+#    Updated: 2017/03/29 13:14:29 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRCS_NAME_SERVEUR = main.c srv_client_write.c srv_init_fd_client.c \
 					srv_com_write_welcome.c srv_interpret_new_data.c \
 					srv_disconnect_client.c srv_create_cmd.c srv_is_cmd_valid.c \
 					srv_cmd_nick.c srv_execute_cmd.c srv_com_one_time_common_chan.c \
-					srv_has_sender_target_common_chan.c srv_com_send_to_sender.c
+					srv_has_sender_target_common_chan.c srv_com_send_to_sender.c \
+					srv_is_str_a_cmd.c
 
 SRCS_PATH_SERVEUR = ./srcs/srv
 

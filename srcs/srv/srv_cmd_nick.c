@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 02:15:46 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:20:17 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int				set_error(t_cmd *cmd, const int fd_sock)
 {
-//	ft_puts("ERROR");
 	cmd->function = SMSG;
 	cmd->target = TARGET_SENDER;
 	cmd->id_chan = -1;
@@ -27,40 +26,39 @@ static int				set_error(t_cmd *cmd, const int fd_sock)
 }
 
 static inline int		create_msg_to_send(t_cmd *cmd, const int fd_sock,
-							const char *cmd_str)
+							const char *old_name, const char *new_name)
 {
-//	ft_puts("OK");
 	cmd->target = ONE_TIME_TO_USER_WITH_COMMON_CHAN;
 	cmd->id_chan = -1;
 	cmd->fd_target = -1;
 	cmd->fd_sender = fd_sock;
 	ft_strcat(cmd->cmd, BEGIN_PACKET);
-	ft_strcat(cmd->cmd, "WIP");
-	ft_strcat(cmd->cmd, cmd_str);
+	ft_strcat(cmd->cmd, new_name);
+	ft_strcat(cmd->cmd, " NICK ");
+	ft_strcat(cmd->cmd, old_name);
 	ft_strcat(cmd->cmd, END_PACKET);
 	return (1);
 }
 
-int						srv_cmd_nick(t_cmd *cmd, const char *begin,
-							const char *end, const int fd_sock)
+int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
+							t_env *env, const int fd_sock)
 {
 	size_t		arg_size;
-	char		*arg;
+	char		old_name[MAX_NICK_LEN + 1];
+	char		new_name[MAX_NICK_LEN + 1];
 
-	if (end == begin + 6 || (arg_size = end - begin - 6) == 0)
+	if (arg->end == arg->begin + 6 || (arg_size = arg->end - arg->begin - 6)
+			== 0)
 		return (set_error(cmd, fd_sock));
-	if (arg_size > MAX_MSG_LEN)
+	if (arg_size > MAX_NICK_LEN)
 		return (set_error(cmd, fd_sock));
-	if ((arg = ft_strnew(arg_size)) == NULL)
+	ft_bzero(new_name, MAX_NICK_LEN + 1);
+	ft_memcpy(new_name, arg->begin + 6, arg_size);
+	if (ft_is_str_alphanum(new_name) == 0 || srv_is_str_a_cmd(new_name) == 1)
 		return (set_error(cmd, fd_sock));
-	ft_memcpy(arg, begin + 6, arg_size);
-//	printf("ARG = |%s| %ld\n", arg, arg_size);
-	if (ft_is_str_alphanum(arg) == 0)
-	{
-		free(arg);
-		return (set_error(cmd, fd_sock));
-	}
-	create_msg_to_send(cmd, fd_sock, arg);
-	free(arg);
+	ft_bzero(old_name, MAX_NICK_LEN + 1);
+	ft_memcpy(old_name, env->list_fd[fd_sock].nick, MAX_NICK_LEN);
+	ft_memcpy(env->list_fd[fd_sock].nick, new_name, MAX_NICK_LEN);
+	create_msg_to_send(cmd, fd_sock, old_name, new_name);
 	return (1);
 }

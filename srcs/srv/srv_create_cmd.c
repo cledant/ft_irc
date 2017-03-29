@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 16:13:34 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:02:02 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,70 +18,60 @@ static int				error_advance_head(t_fd *fd, const size_t size)
 	return (0);
 }
 
-static inline int		finish_cmd(t_cmd *cmd, const char *begin,
-							const char *end, const int fd_sock)
+static inline int		finish_cmd(t_cmd *cmd, const t_cmd_arg *arg,
+							t_env *env, const int fd_sock)
 {
 	if (cmd->function == NICK)
-		return (srv_cmd_nick(cmd, begin, end, fd_sock));
-//	if (cmd->function == JOIN)
-//		return (srv_cmd_join(cmd, begin, end, fd_sock));
+		return (srv_cmd_nick(cmd, arg, env, fd_sock));
 	ft_puts("Unknown command !");
 	return (0);
 }
 
-static inline int		get_cmd(const int fd_sock, const char *begin,
-							const char *end, t_cmd *cmd)
+static inline int		get_cmd(const int fd_sock, const t_cmd_arg *arg,
+							t_cmd *cmd, t_env *env)
 {
 	size_t	size;
 	char	*space;
-	char	*cmd_str;
+	char	cmd_str[MAX_PACKET_SIZE + 1];
 
-	if ((size = end - begin - 1) == 0 || (size = end - begin - 1) >
-			MAX_PACKET_SIZE || ft_isspace(*(begin + 1)) == 1)
+	size = arg->end - arg->begin - 1;
+	if (size == 0 || size > MAX_PACKET_SIZE || ft_isspace(*(arg->begin + 1))
+			== 1)
 		return (0);
-	if ((space = ft_strnstr(begin, " ", size)) == NULL)
+	if ((space = ft_strnstr(arg->begin, " ", size)) == NULL)
 		return (0);
-	if ((cmd_str = ft_strnew(space - 1 - begin)) == NULL)
-	{
-		ft_puts("Memory allocation error");
-		return (0);
-	}
-	ft_memcpy(cmd_str, begin + 1, space - 1 - begin);
+	ft_bzero(cmd_str, MAX_PACKET_SIZE + 1);
+	ft_memcpy(cmd_str, arg->begin + 1, space - 1 - arg->begin);
 	if (srv_is_cmd_valid(cmd_str, cmd) == 0)
-	{
-		free(cmd_str);
 		return (0);
-	}
-	finish_cmd(cmd, begin, end, fd_sock);
-	free(cmd_str);
+	finish_cmd(cmd, arg, env, fd_sock);
 	return (1);
 }
 
 int						srv_create_cmd(t_env *env, const int fd_sock,
 							t_cmd *cmd)
 {
-	char	*begin;
-	char	*end;
+	t_cmd_arg		arg;
 
 	cbuff_dequeue_till_head_no_change(env->list_fd[fd_sock].cbuff_read);
-	if ((begin = ft_strnstr(env->list_fd[fd_sock].cbuff_read->dequeue_buff,
+	if ((arg.begin = ft_strnstr(env->list_fd[fd_sock].cbuff_read->dequeue_buff,
 			BEGIN_PACKET, CBUFF_SIZE)) == NULL)
 		return (0);
-	if ((end = ft_strnstr(env->list_fd[fd_sock].cbuff_read->dequeue_buff,
+	if ((arg.end = ft_strnstr(env->list_fd[fd_sock].cbuff_read->dequeue_buff,
 			END_PACKET, CBUFF_SIZE)) == NULL)
 		return (0);
-	if (begin > end)
+	if (arg.begin > arg.end)
 	{
-		if ((end = ft_strnstr(begin, END_PACKET, CBUFF_SIZE)) == NULL)
+		if ((arg.end = ft_strnstr(arg.begin, END_PACKET, CBUFF_SIZE)) == NULL)
 			return (error_advance_head(&(env->list_fd[fd_sock]),
-				env->list_fd[fd_sock].cbuff_read->dequeue_buff - begin));
+				env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.begin));
 	}
-	if (get_cmd(fd_sock, begin, end, cmd) == 0)
+	if (get_cmd(fd_sock, &arg, cmd, env) == 0)
 		return (error_advance_head(&(env->list_fd[fd_sock]),
-			env->list_fd[fd_sock].cbuff_read->dequeue_buff - end +
+			env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
 			ft_strlen(END_PACKET) - 1));
 	cbuff_move_forward_read_head(env->list_fd[fd_sock].cbuff_read,
-			env->list_fd[fd_sock].cbuff_read->dequeue_buff - end +
+			env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
 			ft_strlen(END_PACKET) - 1);
 	return (1);
 }
