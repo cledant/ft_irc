@@ -6,13 +6,13 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 13:02:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 15:40:09 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int				error_advance_head(t_fd *fd, const size_t size)
+static inline int		error_advance_head(t_fd *fd, const size_t size)
 {
 	cbuff_move_forward_read_head(fd->cbuff_read, size);
 	return (0);
@@ -23,6 +23,8 @@ static inline int		finish_cmd(t_cmd *cmd, const t_cmd_arg *arg,
 {
 	if (cmd->function == NICK)
 		return (srv_cmd_nick(cmd, arg, env, fd_sock));
+	if (cmd->function == JOIN)
+		return (srv_cmd_join(cmd, arg, env, fd_sock));
 	ft_puts("Unknown command !");
 	return (0);
 }

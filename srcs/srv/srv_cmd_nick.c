@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 13:20:17 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 15:47:13 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,8 @@ int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
 	char		old_name[MAX_NICK_LEN + 1];
 	char		new_name[MAX_NICK_LEN + 1];
 
-	if (arg->end == arg->begin + 6 || (arg_size = arg->end - arg->begin - 6)
-			== 0)
-		return (set_error(cmd, fd_sock));
-	if (arg_size > MAX_NICK_LEN)
+	arg_size = arg->end - arg->begin - 6;
+	if (arg->end == arg->begin + 6 || arg_size == 0 || arg_size > MAX_NICK_LEN)
 		return (set_error(cmd, fd_sock));
 	ft_bzero(new_name, MAX_NICK_LEN + 1);
 	ft_memcpy(new_name, arg->begin + 6, arg_size);
@@ -60,5 +58,6 @@ int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
 	ft_memcpy(old_name, env->list_fd[fd_sock].nick, MAX_NICK_LEN);
 	ft_memcpy(env->list_fd[fd_sock].nick, new_name, MAX_NICK_LEN);
 	create_msg_to_send(cmd, fd_sock, old_name, new_name);
+	printf("%s : Client ID : %d changed nick !", env->file_name, fd_sock);
 	return (1);
 }

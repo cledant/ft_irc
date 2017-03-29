@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 13:19:36 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 16:55:35 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef enum		e_err
 	ERR_CLOSE_DISCONNECTED,
 	ERR_CLOSE_OVERWRITE,
 	ERR_CLOSE_INIT_NAME,
+	ERR_MAX_CHAN,
+	ERR_CHAN_NAME,
 	ERR_NONE,
 }					t_err;
 
@@ -182,23 +184,31 @@ void				srv_check_fd_select(t_env *env);
 void				srv_accept_new_client(t_env *env, int fd_sock);
 void				srv_client_read(t_env *env, int fd_sock);
 void				srv_client_write(t_env *env, int fd_sock);
+void				srv_disconnect_client(t_env *env, const int fd_sock,
+						const t_err err);
 int					srv_set_first_nick(t_env *env, const int fd_sock);
 int					srv_is_nick_free(t_env *env, const int fd_sock,
 						const char *nick);
 void				srv_interpret_new_data(t_env *env);
-void				srv_disconnect_client(t_env *env, const int fd_sock,
-						const t_err err);
 int					srv_create_cmd(t_env *env, const int fd_sock, t_cmd *cmd);
 int					srv_is_cmd_valid(const char *cmd_str, t_cmd *cmd);
-int					srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
-						const int fd_sock);
+int					srv_is_str_a_cmd(const char *str);
 void				srv_execute_cmd(t_env *env, t_cmd *cmd);
 int					srv_has_sender_target_common_chan(t_env *env,
 						const int fd_target, const int fd_sender);
-int					srv_is_str_a_cmd(const char *str);
+int					srv_join_user_to_channel(t_env *env, const int fd_sock,
+						const char *chan_name);
 
 /*
-** SERVER COMUNICATION FUNCTION
+** SERVER COMMAND FUNCTIONS
+*/
+int					srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
+						const int fd_sock);
+int					srv_cmd_join(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
+						const int fd_sock);
+
+/*
+** SERVER COMUNICATION FUNCTIONS
 */
 int					srv_com_write_welcome(t_env *env, const int fd_sock);
 void				srv_com_one_time_common_chan(t_env *env, t_cmd *cmd);
