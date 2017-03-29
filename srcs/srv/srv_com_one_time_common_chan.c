@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 12:39:03 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 16:29:37 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 03:14:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ void		srv_com_one_time_common_chan(t_env *env, t_cmd *cmd)
 			{
 				ft_memcpy(env->list_fd[c].cbuff_write->enqueue_buff, cmd->cmd,
 					MAX_PACKET_SIZE + 1);
-				cbuff_enqueue(env->list_fd[c].cbuff_write, MAX_PACKET_SIZE + 1);
+				cbuff_enqueue(env->list_fd[c].cbuff_write,
+					ft_strlen(env->list_fd[c].cbuff_write->enqueue_buff));
 			}
 		}
 		else if ((size_t)cmd->fd_sender == c)
 		{
 			ft_memcpy(env->list_fd[c].cbuff_write->enqueue_buff, cmd->cmd,
 				MAX_PACKET_SIZE + 1);
-			cbuff_enqueue(env->list_fd[c].cbuff_write, MAX_PACKET_SIZE + 1);
+			cbuff_enqueue(env->list_fd[c].cbuff_write,
+				ft_strlen(env->list_fd[c].cbuff_write->enqueue_buff));
 		}
 		c++;
 	}
