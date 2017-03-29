@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_client_read.c                                  :+:      :+:    :+:   */
+/*   srv_seek_chan_id.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/22 20:07:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 18:44:05 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/29 17:58:08 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/29 18:37:32 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_client_read(t_env *env, int fd_sock)
+int		srv_seek_chan_id(t_env *env, const char *chan_name)
 {
-	int		rvd;
+	int		c;
 
-	if ((rvd = recv(fd_sock, env->list_fd[fd_sock].cbuff_read->enqueue_buff,
-			CBUFF_SIZE, 0)) <= 0)
+	c = 0;
+	while (c < MAX_NB_CHAN)
 	{
-		srv_disconnect_client(env, fd_sock, ERR_CLOSE_DISCONNECTED);
-		return ;
+		if (ft_strcmp(chan_name, env->list_chan[c].name) == 0)
+			return (c);
+		c++;
 	}
-	printf("%s : Client ID : %d sent a packet of %d bytes !\n",
-		env->file_name, fd_sock, rvd);
-	cbuff_enqueue(env->list_fd[fd_sock].cbuff_read, rvd);
-	env->new_data[fd_sock] = FD_NEW_DATA;
+	return (-1);
 }

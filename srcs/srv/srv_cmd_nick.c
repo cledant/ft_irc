@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 15:47:13 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 18:43:25 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
 	ft_memcpy(old_name, env->list_fd[fd_sock].nick, MAX_NICK_LEN);
 	ft_memcpy(env->list_fd[fd_sock].nick, new_name, MAX_NICK_LEN);
 	create_msg_to_send(cmd, fd_sock, old_name, new_name);
-	printf("%s : Client ID : %d changed nick !", env->file_name, fd_sock);
+	printf("%s : Client ID : %d changed nick !\n", env->file_name, fd_sock);
 	return (1);
 }

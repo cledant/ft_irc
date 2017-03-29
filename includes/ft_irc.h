@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 16:55:35 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/29 18:56:26 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define FD_NEW_DATA 1
 # define FD_NO_DATA 0
 
+# define IN_CHAN 1
+# define NOT_IN_CHAN 0
+
 typedef enum		e_err
 {
 	ERR_NB_ARG,
@@ -53,6 +56,7 @@ typedef enum		e_err
 	ERR_CLOSE_INIT_NAME,
 	ERR_MAX_CHAN,
 	ERR_CHAN_NAME,
+	ERR_USER_ALREADY_IN_CHAN,
 	ERR_NONE,
 }					t_err;
 
@@ -132,7 +136,7 @@ typedef struct		s_cmd
 	t_target		target;
 	int				fd_sender;
 	int				fd_target;
-	char			id_chan;
+	int				id_chan;
 	char			cmd[MAX_PACKET_SIZE + 1];
 }					t_cmd;
 
@@ -198,6 +202,8 @@ int					srv_has_sender_target_common_chan(t_env *env,
 						const int fd_target, const int fd_sender);
 int					srv_join_user_to_channel(t_env *env, const int fd_sock,
 						const char *chan_name);
+int					srv_seek_chan_id(t_env *env, const char *chan_name);
+int					srv_seek_new_chan_slot(t_env *env);
 
 /*
 ** SERVER COMMAND FUNCTIONS
@@ -213,5 +219,6 @@ int					srv_cmd_join(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 int					srv_com_write_welcome(t_env *env, const int fd_sock);
 void				srv_com_one_time_common_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_sender(t_env *env, t_cmd *cmd);
+void				srv_com_send_to_target_chan(t_env *env, t_cmd *cmd);
 
 #endif
