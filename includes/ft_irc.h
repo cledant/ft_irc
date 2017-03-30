@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 18:17:14 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 21:47:56 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,12 @@ typedef struct		s_env
 	t_chan			list_chan[MAX_NB_CHAN];
 }					t_env;
 
+typedef struct		s_cmd_arg
+{
+	char			*begin;
+	char			*end;
+}					t_cmd_arg;
+
 typedef struct		s_privmsg
 {
 	char			buffer[MAX_PACKET_SIZE + 1];
@@ -174,13 +180,10 @@ typedef struct		s_privmsg
 	char			msg_content[MAX_MSG_LEN + 1];
 	t_cmd_arg		first_arg;
 	t_privmsg_type	type;
+	size_t			buffer_size;
+	size_t			first_arg_size;
+	size_t			second_arg_size;
 }					t_privmsg;
-
-typedef struct		s_cmd_arg
-{
-	char			*begin;
-	char			*end;
-}					t_cmd_arg;
 
 /*
 **	CIRCULAR BUFFER FUNCTIONS
@@ -223,6 +226,7 @@ int					srv_has_sender_target_common_chan(t_env *env,
 						const int fd_target, const int fd_sender);
 int					srv_join_user_to_channel(t_env *env, const int fd_sock,
 						const char *chan_name);
+int					srv_seek_user_fd(t_env *env, const char *user_name);
 int					srv_seek_chan_id(t_env *env, const char *chan_name);
 int					srv_seek_new_chan_slot(t_env *env);
 int					srv_part_user_to_channel(t_env *env, const int fd_sock,
@@ -250,6 +254,7 @@ int					srv_cmd_privmsg(t_cmd *cmd, const t_cmd_arg *arg,
 int					srv_com_write_welcome(t_env *env, const int fd_sock);
 void				srv_com_one_time_common_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_sender(t_env *env, t_cmd *cmd);
+void				srv_com_send_to_user(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan_and_sender(t_env *env,
 						t_cmd *cmd);

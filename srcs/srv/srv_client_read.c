@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 20:07:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 15:12:19 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 00:13:47 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void					srv_client_read(t_env *env, int fd_sock)
 	if ((rvd = recv(fd_sock, env->list_fd[fd_sock].cbuff_read->enqueue_buff,
 			CBUFF_SIZE, 0)) <= 0)
 	{
-		srv_notify_quit_common_chan(env, fd_sock, "Max buffer reached !");
+		srv_notify_quit_common_chan(env, fd_sock, "Client disconnected !");
 		srv_disconnect_client(env, fd_sock, ERR_CLOSE_DISCONNECTED);
 		return ;
 	}

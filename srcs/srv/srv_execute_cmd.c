@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 12:00:33 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 13:08:32 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 21:42:42 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void		srv_execute_cmd(t_env *env, t_cmd *cmd)
 		srv_com_one_time_common_chan(env, cmd);
 	else if (cmd->target == TARGET_SENDER)
 		srv_com_send_to_sender(env, cmd);
+	else if (cmd->target == TARGET_USER)
+		srv_com_send_to_user(env, cmd);
 	else if (cmd->target == TARGET_CHAN)
 		srv_com_send_to_target_chan(env, cmd);
 	else if (cmd->target == TARGET_CHAN_AND_SENDER)
