@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/03/30 14:50:56 by cledant          ###   ########.fr        #
+#    Updated: 2017/03/30 18:19:39 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRCS_NAME_SERVEUR = main.c srv_client_write.c srv_init_fd_client.c \
 					srv_com_send_to_target_chan.c srv_cmd_part.c \
 					srv_part_user_to_channel.c srv_cmd_quit.c \
 					srv_com_send_to_target_chan_and_sender.c \
-					srv_notify_quit_common_chan.c srv_cmd_quit.c
+					srv_notify_quit_common_chan.c srv_cmd_quit.c srv_cmd_privmsg.c
 
 
 SRCS_PATH_SERVEUR = ./srcs/srv

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 14:58:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 18:17:14 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,13 @@ typedef enum		e_func
 	NO_FUNCTION,
 }					t_func;
 
+typedef enum		e_privmsg_type
+{
+	IS_CHAN,
+	IS_USER,
+	NOTHING = 0,
+}					t_privmsg_type;
+
 typedef struct		s_cbuff
 {
 	size_t			size;
@@ -158,6 +165,16 @@ typedef struct		s_env
 	char			*file_name;
 	t_chan			list_chan[MAX_NB_CHAN];
 }					t_env;
+
+typedef struct		s_privmsg
+{
+	char			buffer[MAX_PACKET_SIZE + 1];
+	char			user_name[MAX_NICK_LEN + 1];
+	char			chan_name[MAX_CHAN_NAME_LEN + 1];
+	char			msg_content[MAX_MSG_LEN + 1];
+	t_cmd_arg		first_arg;
+	t_privmsg_type	type;
+}					t_privmsg;
 
 typedef struct		s_cmd_arg
 {
@@ -224,6 +241,8 @@ int					srv_cmd_part(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 int					srv_cmd_quit(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
+int					srv_cmd_privmsg(t_cmd *cmd, const t_cmd_arg *arg,
+						t_env *env, const int fd_sock);
 
 /*
 ** SERVER COMUNICATION FUNCTIONS
@@ -234,5 +253,4 @@ void				srv_com_send_to_sender(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan_and_sender(t_env *env,
 						t_cmd *cmd);
-
 #endif
