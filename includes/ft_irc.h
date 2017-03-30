@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 13:02:15 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 14:58:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef enum		e_func
 	PRIVMSG,
 	WELCOME,
 	SMSG,
+	QUIT,
 	NO_FUNCTION,
 }					t_func;
 
@@ -209,6 +210,8 @@ int					srv_seek_chan_id(t_env *env, const char *chan_name);
 int					srv_seek_new_chan_slot(t_env *env);
 int					srv_part_user_to_channel(t_env *env, const int fd_sock,
 						const char *chan_name);
+void				srv_notify_quit_common_chan(t_env *env, const int fd_stock,
+						const char *reason);
 
 /*
 ** SERVER COMMAND FUNCTIONS
@@ -218,6 +221,8 @@ int					srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 int					srv_cmd_join(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 int					srv_cmd_part(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
+						const int fd_sock);
+int					srv_cmd_quit(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 
 /*
