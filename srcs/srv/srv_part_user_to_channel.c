@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv_execute_cmd.c                                  :+:      :+:    :+:   */
+/*   srv_part_user_to_channel.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 12:00:33 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 13:08:32 by cledant          ###   ########.fr       */
+/*   Created: 2017/03/30 12:05:21 by cledant           #+#    #+#             */
+/*   Updated: 2017/03/30 12:57:20 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		srv_execute_cmd(t_env *env, t_cmd *cmd)
+int			srv_part_user_to_channel(t_env *env, const int fd_sock,
+				const char *chan_name)
 {
-	if (cmd->target == ONE_TIME_TO_USER_WITH_COMMON_CHAN)
-		srv_com_one_time_common_chan(env, cmd);
-	else if (cmd->target == TARGET_SENDER)
-		srv_com_send_to_sender(env, cmd);
-	else if (cmd->target == TARGET_CHAN)
-		srv_com_send_to_target_chan(env, cmd);
-	else if (cmd->target == TARGET_CHAN_AND_SENDER)
-		srv_com_send_to_target_chan_and_sender(env, cmd);
+	int		chan_id;
+
+	if ((chan_id = srv_seek_chan_id(env, chan_name)) == -1)
+		return (-1);
+	if (env->list_fd[fd_sock].joined_chan[chan_id] == NOT_IN_CHAN)
+		return (-2);
+	env->list_chan[chan_id].nb_user -= 1;
+	env->list_fd[fd_sock].joined_chan[chan_id] = NOT_IN_CHAN;
+	return (chan_id);
 }

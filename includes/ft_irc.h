@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/29 18:56:26 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 13:02:15 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef enum		e_err
 	ERR_MAX_CHAN,
 	ERR_CHAN_NAME,
 	ERR_USER_ALREADY_IN_CHAN,
+	ERR_USER_NOT_IN_CHAN,
+	ERR_CHAN_DOES_NOT_EXIST,
 	ERR_NONE,
 }					t_err;
 
@@ -85,6 +87,7 @@ typedef enum		e_target
 	TARGET_USER,
 	TARGET_SENDER,
 	ONE_TIME_TO_USER_WITH_COMMON_CHAN,
+	TARGET_CHAN_AND_SENDER,
 	NO_TARGET,
 }					t_target;
 
@@ -204,6 +207,8 @@ int					srv_join_user_to_channel(t_env *env, const int fd_sock,
 						const char *chan_name);
 int					srv_seek_chan_id(t_env *env, const char *chan_name);
 int					srv_seek_new_chan_slot(t_env *env);
+int					srv_part_user_to_channel(t_env *env, const int fd_sock,
+						const char *chan_name);
 
 /*
 ** SERVER COMMAND FUNCTIONS
@@ -211,6 +216,8 @@ int					srv_seek_new_chan_slot(t_env *env);
 int					srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 int					srv_cmd_join(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
+						const int fd_sock);
+int					srv_cmd_part(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 
 /*
@@ -220,5 +227,7 @@ int					srv_com_write_welcome(t_env *env, const int fd_sock);
 void				srv_com_one_time_common_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_sender(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan(t_env *env, t_cmd *cmd);
+void				srv_com_send_to_target_chan_and_sender(t_env *env,
+						t_cmd *cmd);
 
 #endif

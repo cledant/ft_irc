@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/03/29 18:35:51 by cledant          ###   ########.fr        #
+#    Updated: 2017/03/30 13:07:26 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ SRCS_NAME_SERVEUR = main.c srv_client_write.c srv_init_fd_client.c \
 					srv_has_sender_target_common_chan.c srv_com_send_to_sender.c \
 					srv_is_str_a_cmd.c srv_cmd_join.c srv_seek_chan_id.c \
 					srv_join_user_to_channel.c srv_seek_new_chan_slot.c \
-					srv_com_send_to_target_chan.c
+					srv_com_send_to_target_chan.c srv_cmd_part.c \
+					srv_part_user_to_channel.c \
+					srv_com_send_to_target_chan_and_sender.c
 
 
 SRCS_PATH_SERVEUR = ./srcs/srv
