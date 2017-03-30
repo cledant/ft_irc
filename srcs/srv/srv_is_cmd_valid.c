@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:01:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/28 15:57:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/30 13:33:42 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int						srv_is_cmd_valid(const char *cmd_str, t_cmd *cmd)
 	else if (ft_strcmp(cmd_str, "WELCOME") == 0)
 		return (set_enum(cmd, WELCOME));
 	else if (ft_strcmp(cmd_str, "SMSG") == 0)
+		return (set_enum(cmd, SMSG));
+	else if (ft_strcmp(cmd_str, "QUIT") == 0)
 		return (set_enum(cmd, SMSG));
 	ft_puts("Invalid command received !");
 	return (0);
