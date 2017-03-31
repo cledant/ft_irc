@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 12:02:22 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 16:23:43 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/socket.h>
 # include <sys/time.h>
 # include <arpa/inet.h>
+# include <signal.h>
 # include <netdb.h>
 # include <stdio.h>
 # include "libft.h"
@@ -38,6 +39,9 @@
 
 # define IN_CHAN 1
 # define NOT_IN_CHAN 0
+
+# define FREE 1
+# define NO_FREE 0
 
 typedef enum		e_err
 {
@@ -204,9 +208,15 @@ void				cbuff_move_forward_read_head(t_cbuff *cbuff,
 /*
 **	SERVER FUNCTIONS
 */
+t_env				*srv_get_env(t_env *env);
+void				srv_set_signal(void);
+void				srv_shutdown(void);
 t_err				srv_init_env(t_env *env, char **argv);
+void				srv_close_all_client_socket(t_env *env);
+void				srv_close_srv_socket(t_env *env);
 int					srv_init_fd_free(t_fd *fd, const t_switch type);
 void				srv_init_fd_client(t_env *env, const int fd_sock);
+void				srv_destroy_fd(t_env *env);
 void				srv_init_chan_free(t_chan *chan);
 t_err				srv_create_server(t_env *env);
 void				srv_main_loop(t_env *env);

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 16:04:25 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/27 09:18:37 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 16:10:35 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_err		srv_create_server(t_env *env)
 		close(sock);
 		return (ERR_OPEN_SOCKET);
 	}
+	env->list_fd[sock].type = FD_SERVER;
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(env->port);
 	sin.sin_addr.s_addr = INADDR_ANY;
@@ -34,7 +35,6 @@ t_err		srv_create_server(t_env *env)
 		return (ERR_BIND_SOCKET);
 	if ((listen(sock, LISTEN_SIZE)) == -1)
 		return (ERR_LISTEN_SOCKET);
-	env->list_fd[sock].type = FD_SERVER;
 	env->list_fd[sock].fct_read = srv_accept_new_client;
 	return (ERR_NONE);
 }

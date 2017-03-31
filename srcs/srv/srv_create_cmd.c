@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 12:19:07 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 13:53:02 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ int						srv_create_cmd(t_env *env, const int fd_sock,
 	{
 		if ((arg.end = ft_strnstr(arg.begin, END_PACKET, CBUFF_SIZE)) == NULL)
 			return (error_advance_head(&(env->list_fd[fd_sock]),
-				env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.begin));
+				arg.begin - env->list_fd[fd_sock].cbuff_read->dequeue_buff));
 	}
 	if (get_cmd(fd_sock, &arg, cmd, env) == 0)
 	{
 		return (error_advance_head(&(env->list_fd[fd_sock]),
-			env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
+			arg.end - env->list_fd[fd_sock].cbuff_read->dequeue_buff +
 			ft_strlen(END_PACKET) - 1));
 	}
 	cbuff_move_forward_read_head(env->list_fd[fd_sock].cbuff_read,
-		env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
+		arg.end - env->list_fd[fd_sock].cbuff_read->dequeue_buff +
 		ft_strlen(END_PACKET) - 1);
 	return (1);
 }
