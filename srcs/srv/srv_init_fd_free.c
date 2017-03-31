@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 19:34:54 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 14:34:27 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:17:53 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		srv_init_fd_free(t_fd *fd, const t_switch type)
 	}
 	else if (type == RESET)
 	{
-		cbuff_flush(fd->cbuff_read);	
+		cbuff_flush(fd->cbuff_read);
 		cbuff_flush(fd->cbuff_write);
 	}
 	else

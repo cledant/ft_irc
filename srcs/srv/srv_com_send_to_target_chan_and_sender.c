@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 13:06:48 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 13:06:57 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:15:00 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		srv_com_send_to_target_chan_and_sender(t_env *env, t_cmd *cmd)
 {
 	size_t		c;
-	
+
 	c = 0;
 	while (c < (size_t)env->max_fd)
 	{

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 21:47:56 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:02:22 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ typedef enum		e_err
 	ERR_USER_ALREADY_IN_CHAN,
 	ERR_USER_NOT_IN_CHAN,
 	ERR_CHAN_DOES_NOT_EXIST,
+	ERR_FIRST_ARG,
+	ERR_SECOND_ARG,
+	ERR_INVALID_CHAN_USER,
+	ERR_MAX_CHAN_USER_LEN,
 	ERR_NONE,
 }					t_err;
 

@@ -6,13 +6,13 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 16:09:50 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/25 14:13:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:13:40 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int		print_err(const t_err code, const char *str)	
+static int		print_err(const t_err code, const char *str)
 {
 	if (code == ERR_NB_ARG)
 		printf("Usage : %s <port>\n", str);

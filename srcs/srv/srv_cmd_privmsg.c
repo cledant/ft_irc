@@ -6,13 +6,14 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:54:29 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 23:33:00 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:15:35 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int				set_error(t_cmd *cmd, const int fd_sock)
+static int				set_error(t_cmd *cmd, const int fd_sock,
+							const t_err err)
 {
 	cmd->function = SMSG;
 	cmd->target = TARGET_SENDER;
@@ -20,7 +21,16 @@ static int				set_error(t_cmd *cmd, const int fd_sock)
 	cmd->fd_target = -1;
 	cmd->fd_sender = fd_sock;
 	ft_strcat(cmd->cmd, BEGIN_PACKET);
-	ft_strcat(cmd->cmd, "SMSG Invalid message !");
+	if (err == ERR_FIRST_ARG)
+		ft_strcat(cmd->cmd, "SMSG Invalid user or channel !");
+	else if (err == ERR_SECOND_ARG)
+		ft_strcat(cmd->cmd, "SMSG Invalid message !");
+	else if (err == ERR_INVALID_CHAN_USER)
+		ft_strcat(cmd->cmd, "SMSG Invalid chan or user!");
+	else if (err == ERR_USER_NOT_IN_CHAN)
+		ft_strcat(cmd->cmd, "SMSG You are not in that channel !");
+	else
+		ft_strcat(cmd->cmd, "SMSG Invalid channel or user name length !");
 	ft_strcat(cmd->cmd, END_PACKET);
 	return (1);
 }
@@ -32,7 +42,7 @@ static inline int		create_msg_to_send(t_cmd *cmd, const int fd_sock,
 	{
 		cmd->target = TARGET_CHAN;
 		if ((cmd->id_chan = srv_seek_chan_id(env, parse->chan_name)) == -1)
-			return (-1);	
+			return (-1);
 		cmd->fd_target = -1;
 		cmd->fd_sender = fd_sock;
 	}
@@ -40,7 +50,7 @@ static inline int		create_msg_to_send(t_cmd *cmd, const int fd_sock,
 	{
 		cmd->target = TARGET_USER;
 		if ((cmd->fd_target = srv_seek_user_fd(env, parse->user_name)) == -1)
-			return (-1);	
+			return (-1);
 		cmd->id_chan = -1;
 		cmd->fd_sender = fd_sock;
 	}
@@ -102,19 +112,19 @@ int						srv_cmd_privmsg(t_cmd *cmd, const t_cmd_arg *arg,
 	arg_size = arg->end - arg->begin - 9;
 	if (arg->end == arg->begin + 9 || arg_size == 0 ||
 			arg_size > MAX_MSG_LEN + MAX_CHAN_NAME_LEN + 1)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_MAX_CHAN_USER_LEN));
 	ft_bzero(&parse, sizeof(t_privmsg));
 	ft_memcpy(parse.buffer, arg->begin + 9, arg_size);
 	parse.buffer_size = arg_size;
 	if (check_privmsg_type(&parse) == -1)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_FIRST_ARG));
 	if (check_privmsg_msg(&parse) == -1)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_SECOND_ARG));
 	if (create_msg_to_send(cmd, fd_sock, &parse, env) == -1)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_INVALID_CHAN_USER));
 	if (parse.type == IS_CHAN &&
 			env->list_fd[fd_sock].joined_chan[cmd->id_chan] == NOT_IN_CHAN)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_USER_NOT_IN_CHAN));
 	printf("%s : Client ID : %d sent a message !\n", env->file_name, fd_sock);
 	return (1);
 }

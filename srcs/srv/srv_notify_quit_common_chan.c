@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 14:40:39 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 15:14:27 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:18:14 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			srv_notify_quit_common_chan(t_env *env, const int fd_sock,
 					const char *reason)
 {
 	t_cmd		cmd;
-	
+
 	cmd.function = SMSG;
 	cmd.target = ONE_TIME_TO_USER_WITH_COMMON_CHAN;
 	cmd.fd_target = -1;

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 16:44:33 by cledant          ###   ########.fr       */
+/*   Updated: 2017/03/31 12:19:07 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ int						srv_create_cmd(t_env *env, const int fd_sock,
 				env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.begin));
 	}
 	if (get_cmd(fd_sock, &arg, cmd, env) == 0)
+	{
 		return (error_advance_head(&(env->list_fd[fd_sock]),
 			env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
 			ft_strlen(END_PACKET) - 1));
+	}
 	cbuff_move_forward_read_head(env->list_fd[fd_sock].cbuff_read,
-			env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
-			ft_strlen(END_PACKET) - 1);
+		env->list_fd[fd_sock].cbuff_read->dequeue_buff - arg.end +
+		ft_strlen(END_PACKET) - 1);
 	return (1);
 }
