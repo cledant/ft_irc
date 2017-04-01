@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 15:17:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 13:53:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/01 10:10:28 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static inline int		finish_cmd(t_cmd *cmd, const t_cmd_arg *arg,
 		return (srv_cmd_quit(cmd, arg, env, fd_sock));
 	else if (cmd->function == PRIVMSG)
 		return (srv_cmd_privmsg(cmd, arg, env, fd_sock));
+	else if (cmd->function == NAMES)
+		return (srv_cmd_names(cmd, arg, env, fd_sock));
 	ft_puts("Unknown command !");
 	return (0);
 }

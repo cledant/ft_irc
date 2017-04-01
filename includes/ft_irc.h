@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 16:23:43 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/01 11:12:56 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,14 @@ typedef struct		s_privmsg
 	size_t			second_arg_size;
 }					t_privmsg;
 
+typedef struct		s_userlist
+{
+	char			chan_name[MAX_CHAN_NAME_LEN + 1];
+	int				chan_id;
+	int				nb_user;
+	char			user_list[MAX_MSG_LEN + 1];
+}					t_userlist;
+
 /*
 **	CIRCULAR BUFFER FUNCTIONS
 */
@@ -247,6 +255,8 @@ int					srv_part_user_to_channel(t_env *env, const int fd_sock,
 						const char *chan_name);
 void				srv_notify_quit_common_chan(t_env *env, const int fd_stock,
 						const char *reason);
+void				srv_seek_userlist(t_env *env, t_userlist *u_list);
+void				srv_itoa_buffer(int n, char *buffer);
 
 /*
 ** SERVER COMMAND FUNCTIONS
@@ -260,6 +270,8 @@ int					srv_cmd_part(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 int					srv_cmd_quit(t_cmd *cmd, const t_cmd_arg *arg, t_env *env,
 						const int fd_sock);
 int					srv_cmd_privmsg(t_cmd *cmd, const t_cmd_arg *arg,
+						t_env *env, const int fd_sock);
+int					srv_cmd_names(t_cmd *cmd, const t_cmd_arg *arg,
 						t_env *env, const int fd_sock);
 
 /*
