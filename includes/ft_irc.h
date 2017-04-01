@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/01 11:12:56 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/01 17:40:34 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define BEGIN_PACKET ":"
 # define END_PACKET "\n"
 # define CBUFF_SIZE 8192
+# define DEFAULT_IP "localhost"
+# define DEFAULT_PORT "4242"
 
 # define FD_NEW_DATA 1
 # define FD_NO_DATA 0
@@ -201,6 +203,12 @@ typedef struct		s_userlist
 	char			user_list[MAX_MSG_LEN + 1];
 }					t_userlist;
 
+typedef struct		s_clnt_env
+{
+	int				socket;
+	char			last_chan[MAX_CHAN_NAME_LEN + 1];
+}					t_clnt_env;
+
 /*
 **	CIRCULAR BUFFER FUNCTIONS
 */
@@ -284,4 +292,8 @@ void				srv_com_send_to_user(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan(t_env *env, t_cmd *cmd);
 void				srv_com_send_to_target_chan_and_sender(t_env *env,
 						t_cmd *cmd);
+
+/*
+** CLIENT FUNCTIONS
+*/
 #endif
