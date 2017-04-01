@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 14:15:05 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 16:25:57 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/01 14:38:50 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void		srv_shutdown(void)
 		srv_destroy_fd(env);
 	}
 	printf("%s : Shutdown !\n", env->file_name);
-	exit (0);
+	exit(0);
 }
