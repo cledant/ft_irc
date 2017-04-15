@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/01 11:17:06 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/15 19:30:17 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ OBJ_SRCS_SERVEUR = $(SRCS_NAME_SERVEUR:%.c=$(OBJ_DIR_NAME_SERVEUR)/%.o)
 
 NAME_SERVEUR = serveur
 
-SRCS_NAME_CLIENT = main.c
+SRCS_NAME_CLIENT = main.c clnt_connect_server.c
 
 SRCS_PATH_CLIENT = ./srcs/clnt
 

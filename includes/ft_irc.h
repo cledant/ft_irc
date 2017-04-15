@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/01 17:40:34 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/15 18:59:25 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ typedef struct		s_userlist
 typedef struct		s_clnt_env
 {
 	int				socket;
+	int				port;
 	char			last_chan[MAX_CHAN_NAME_LEN + 1];
 }					t_clnt_env;
 
@@ -296,4 +297,6 @@ void				srv_com_send_to_target_chan_and_sender(t_env *env,
 /*
 ** CLIENT FUNCTIONS
 */
+t_err				clnt_connect_server(const char *addr, const char *port,
+						t_clnt_env *env);
 #endif
