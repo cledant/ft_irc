@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/15 18:59:25 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/16 20:11:06 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef enum		e_err
 	ERR_SECOND_ARG,
 	ERR_INVALID_CHAN_USER,
 	ERR_MAX_CHAN_USER_LEN,
+	ERR_SERV_NOT_FOUND,
+	ERR_SERV_CONNECT,
 	ERR_NONE,
 }					t_err;
 
@@ -176,6 +178,15 @@ typedef struct		s_env
 	t_chan			list_chan[MAX_NB_CHAN];
 }					t_env;
 
+typedef struct		s_clnt_env
+{
+	int				max_fd;
+	int				socket;
+	int				port;
+	struct addrinfo	*result;
+	char			last_chan[MAX_CHAN_NAME_LEN + 1];
+}					t_clnt_env;
+
 typedef struct		s_cmd_arg
 {
 	char			*begin;
@@ -202,13 +213,6 @@ typedef struct		s_userlist
 	int				nb_user;
 	char			user_list[MAX_MSG_LEN + 1];
 }					t_userlist;
-
-typedef struct		s_clnt_env
-{
-	int				socket;
-	int				port;
-	char			last_chan[MAX_CHAN_NAME_LEN + 1];
-}					t_clnt_env;
 
 /*
 **	CIRCULAR BUFFER FUNCTIONS
@@ -297,6 +301,7 @@ void				srv_com_send_to_target_chan_and_sender(t_env *env,
 /*
 ** CLIENT FUNCTIONS
 */
+t_err				clnt_init_env(t_clnt_env *env);
 t_err				clnt_connect_server(const char *addr, const char *port,
 						t_clnt_env *env);
 #endif
