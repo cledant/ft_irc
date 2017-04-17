@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clnt_do_select.c                                   :+:      :+:    :+:   */
+/*   clnt_read.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 12:35:44 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 17:30:51 by cledant          ###   ########.fr       */
+/*   Created: 2017/04/17 13:44:43 by cledant           #+#    #+#             */
+/*   Updated: 2017/04/17 14:18:17 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		clnt_do_select(t_clnt_env *env)
+void		clnt_read(t_cbuff *cbuff_read, int fd_sock)
 {
-	env->select_do = select(env->socket + 1, &(env->fdset_r),
-		&(env->fdset_w), NULL, NULL);
+	int		rvd;
+
+	if ((rvd = recv(fd_sock, cbuff_read->enqueue_buff, CBUFF_SIZE, 0)) <= 0)
+	{
+		//deco a faire
+		return ;
+	}
+	cbuff_enqueue(cbuff_read, rvd);
 }

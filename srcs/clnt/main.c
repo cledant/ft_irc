@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 11:59:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 15:33:22 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		main(int argc, char **argv)
 		close(env.socket);
 		return (print_err(err, argv[0]));
 	}
-	clnt_main_loop();
+	clnt_main_loop(&env);
 	endwin();
 	return (0);
 }

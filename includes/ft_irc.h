@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 12:43:16 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 15:32:53 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ typedef struct		s_clnt_env
 	int				socket;
 	int				port;
 	struct addrinfo	*result;
-	char			buff[4096];
+	char			buff[MAX_MSG_LEN + 1];
 	WINDOW			*in;
 	WINDOW			*out;
 	fd_set			fdset_r;
@@ -316,9 +316,13 @@ t_err				clnt_init_env(t_clnt_env *env);
 t_err				clnt_init_ncurses(t_clnt_env *env);
 t_err				clnt_connect_server(const char *addr, const char *port,
 						t_clnt_env *env);
-void				clnt_main_loop(void);
+void				clnt_main_loop(t_clnt_env *env);
 void				clnt_set_fd_select(t_clnt_env *env);
 void				clnt_do_select(t_clnt_env *env);
 void				clnt_check_fd_select(t_clnt_env *env);
+void				clnt_read(t_cbuff *cbuff_read, int fd_sock);
+void				clnt_write(t_cbuff *cbuff_write, int fd_sock);
+void				clnt_interpret_new_data(t_clnt_env *env);
+void				clnt_display(t_clnt_env *env);
 
 #endif
