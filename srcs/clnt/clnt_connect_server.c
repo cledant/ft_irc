@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 18:52:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/16 20:11:19 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 09:25:01 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,21 @@
 
 static int	connect_to_serv(t_clnt_env *env)
 {
-	(void)env;
+	struct addrinfo		*rp;
+
+	rp = env->result;
+	while (rp != NULL)
+	{
+		if (connect(env->socket, rp->ai_addr, rp->ai_addrlen) != -1)
+		{
+			freeaddrinfo(env->result);
+			env->result = NULL;
+			return (1);
+		}
+		rp = rp->ai_next;
+	}
+	freeaddrinfo(env->result);
+	env->result = NULL;
 	return (0);
 }
 
