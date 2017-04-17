@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/16 20:11:06 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 12:43:16 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <netdb.h>
 # include <stdio.h>
+# include <curses.h>
 # include "libft.h"
 
 # define MAX_PACKET_SIZE 1024
@@ -71,6 +72,7 @@ typedef enum		e_err
 	ERR_MAX_CHAN_USER_LEN,
 	ERR_SERV_NOT_FOUND,
 	ERR_SERV_CONNECT,
+	ERR_INIT_NCURSES,
 	ERR_NONE,
 }					t_err;
 
@@ -184,6 +186,15 @@ typedef struct		s_clnt_env
 	int				socket;
 	int				port;
 	struct addrinfo	*result;
+	char			buff[4096];
+	WINDOW			*in;
+	WINDOW			*out;
+	fd_set			fdset_r;
+	fd_set			fdset_w;
+	t_cbuff			*cbuff_read;
+	t_cbuff			*cbuff_write;
+	int				should_loop;
+	int				select_do;
 	char			last_chan[MAX_CHAN_NAME_LEN + 1];
 }					t_clnt_env;
 
@@ -302,6 +313,12 @@ void				srv_com_send_to_target_chan_and_sender(t_env *env,
 ** CLIENT FUNCTIONS
 */
 t_err				clnt_init_env(t_clnt_env *env);
+t_err				clnt_init_ncurses(t_clnt_env *env);
 t_err				clnt_connect_server(const char *addr, const char *port,
 						t_clnt_env *env);
+void				clnt_main_loop(void);
+void				clnt_set_fd_select(t_clnt_env *env);
+void				clnt_do_select(t_clnt_env *env);
+void				clnt_check_fd_select(t_clnt_env *env);
+
 #endif

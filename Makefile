@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/16 16:36:22 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/17 12:06:34 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ OBJ_DIR_NAME_CLIENT = $(OBJ_DIR_NAME)/clnt
 OBJ_DIR_NAME_CBUFF = $(OBJ_DIR_NAME)/cbuff
 
 LIBS = -lft
+
+LIBS_CLNT = -lft -lncurses
 
 INCLUDES = ./includes
 
@@ -56,7 +58,8 @@ OBJ_SRCS_SERVEUR = $(SRCS_NAME_SERVEUR:%.c=$(OBJ_DIR_NAME_SERVEUR)/%.o)
 
 NAME_SERVEUR = serveur
 
-SRCS_NAME_CLIENT = main.c clnt_init_env.c clnt_connect_server.c
+SRCS_NAME_CLIENT = main.c clnt_init_env.c clnt_connect_server.c clnt_init_ncurses.c \
+				   clnt_main_loop.c
 
 SRCS_PATH_CLIENT = ./srcs/clnt
 
@@ -81,7 +84,7 @@ $(NAME_SERVEUR) : $(OBJ_SRCS_SERVEUR) $(OBJ_SRCS_CBUFF)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -L$(LIBFT_PATH)
 
 $(NAME_CLIENT) : $(OBJ_SRCS_CLIENT) $(OBJ_SRCS_CBUFF)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -L$(LIBFT_PATH)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS_CLNT) -L$(LIBFT_PATH)
 
 $(OBJ_DIR_NAME_SERVEUR)/%.o : $(SRCS_PATH_SERVEUR)/%.c
 	mkdir -p $(OBJ_DIR_NAME_SERVEUR)

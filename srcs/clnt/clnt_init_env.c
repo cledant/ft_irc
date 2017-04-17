@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 16:25:51 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/16 19:43:18 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 12:00:32 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ t_err		clnt_init_env(t_clnt_env *env)
 	struct rlimit	r_lim;
 	struct protoent	*pe;
 
+	if ((env->cbuff_read = cbuff_create(CBUFF_SIZE)) == NULL)
+		return (ERR_ALLOC_MEM);
+	if ((env->cbuff_write = cbuff_create(CBUFF_SIZE)) == NULL)
+		return (ERR_ALLOC_MEM);
 	if (getrlimit(RLIMIT_NOFILE, &r_lim) == -1)
 		return (ERR_GET_RLIM);
 	if ((env->max_fd = r_lim.rlim_cur) <= 0)
@@ -30,5 +34,6 @@ t_err		clnt_init_env(t_clnt_env *env)
 		close(env->socket);
 		return (ERR_OPEN_SOCKET);
 	}
+	env->should_loop = 1;
 	return (ERR_NONE);
 }

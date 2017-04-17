@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/16 20:11:13 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/17 11:59:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int		print_err(const t_err code, const char *str)
 		printf("%s : Can't find server\n", str);
 	else if (code == ERR_SERV_CONNECT)
 		printf("%s : Can't connect to server\n", str);
+	else if (code == ERR_INIT_NCURSES)
+		printf("%s : Can't init ncurses\n", str);
 	return (-1);
 }
 
@@ -73,12 +75,23 @@ int		main(int argc, char **argv)
 
 	ft_bzero(&env, sizeof(t_clnt_env));
 	if ((err = clnt_init_env(&env)) != ERR_NONE)
+	{
+		//TODO clear env
 		return (print_err(err, argv[0]));
+	}
+	if ((err = clnt_init_ncurses(&env)) != ERR_NONE)
+	{
+		endwin();
+		close(env.socket);
+		return (print_err(err, argv[0]));
+	}	
 	if ((err = default_connect(argc, argv, &env)) != ERR_NONE)
 	{
+		endwin();
 		close(env.socket);
 		return (print_err(err, argv[0]));
 	}
-	while(1);
+	clnt_main_loop();
+	endwin();
 	return (0);
 }
