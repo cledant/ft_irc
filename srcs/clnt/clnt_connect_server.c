@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 18:52:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:52:59 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 22:35:16 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ t_err		clnt_connect_server(const char *addr, const char *port,
 		return (ERR_PORT_INTERVAL);
 	if ((pe = getprotobyname("tcp")) == NULL)
 		return (ERR_UNKNOWN_PROTOCOL);
+	if ((env->socket = socket(PF_INET, SOCK_STREAM, pe->p_proto)) == -1)
+		return (ERR_OPEN_SOCKET);
+	if (env->socket >= env->max_fd)
+	{
+		close(env->socket);
+		return (ERR_OPEN_SOCKET);
+	}
 	ft_bzero(&hints, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;

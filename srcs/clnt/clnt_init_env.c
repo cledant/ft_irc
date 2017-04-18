@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 16:25:51 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 13:14:29 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 22:35:38 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_err		clnt_init_env(t_clnt_env *env, char **argv)
 {
 	struct rlimit	r_lim;
-	struct protoent	*pe;
 
 	if ((env->cbuff_read = cbuff_create(CBUFF_SIZE)) == NULL)
 		return (ERR_ALLOC_MEM);
@@ -25,15 +24,6 @@ t_err		clnt_init_env(t_clnt_env *env, char **argv)
 		return (ERR_GET_RLIM);
 	if ((env->max_fd = r_lim.rlim_cur) <= 0)
 		return (ERR_MAX_FD);
-	if ((pe = getprotobyname("tcp")) == NULL)
-		return (ERR_UNKNOWN_PROTOCOL);
-	if ((env->socket = socket(PF_INET, SOCK_STREAM, pe->p_proto)) == -1)
-		return (ERR_OPEN_SOCKET);
-	if (env->socket >= env->max_fd)
-	{
-		close(env->socket);
-		return (ERR_OPEN_SOCKET);
-	}
 	env->should_loop = 1;
 	env->file_name = argv[0];
 	return (ERR_NONE);
