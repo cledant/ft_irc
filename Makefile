@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/17 15:20:08 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/18 13:18:34 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,9 @@ NAME_SERVEUR = serveur
 SRCS_NAME_CLIENT = main.c clnt_init_env.c clnt_connect_server.c clnt_init_ncurses.c \
 				   clnt_main_loop.c clnt_set_fd_select.c clnt_do_select.c \
 				   clnt_check_fd_select.c clnt_read.c clnt_write.c \
-				   clnt_interpret_new_data.c clnt_display.c
+				   clnt_interpret_new_data.c clnt_display.c clnt_disconnect.c \
+				   clnt_get_env.c clnt_destroy_env.c clnt_close_ncurses.c \
+				   clnt_set_signal.c clnt_close_client.c
 
 SRCS_PATH_CLIENT = ./srcs/clnt
 

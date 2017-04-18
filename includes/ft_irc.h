@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 15:32:53 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 13:27:39 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 
 # define FREE 1
 # define NO_FREE 0
+
+# define CONNECTED 1
+# define DISCONNECTED 0
 
 typedef enum		e_err
 {
@@ -185,16 +188,19 @@ typedef struct		s_clnt_env
 	int				max_fd;
 	int				socket;
 	int				port;
+	int				state;
+	int				select_max;
 	struct addrinfo	*result;
-	char			buff[MAX_MSG_LEN + 1];
 	WINDOW			*in;
 	WINDOW			*out;
+	int				select_do;
 	fd_set			fdset_r;
 	fd_set			fdset_w;
+	char			buff[MAX_MSG_LEN + 1];
 	t_cbuff			*cbuff_read;
 	t_cbuff			*cbuff_write;
 	int				should_loop;
-	int				select_do;
+	char			*file_name;
 	char			last_chan[MAX_CHAN_NAME_LEN + 1];
 }					t_clnt_env;
 
@@ -312,10 +318,14 @@ void				srv_com_send_to_target_chan_and_sender(t_env *env,
 /*
 ** CLIENT FUNCTIONS
 */
-t_err				clnt_init_env(t_clnt_env *env);
+t_err				clnt_init_env(t_clnt_env *env, char **argv);
+t_clnt_env			*clnt_get_env(t_clnt_env *env);
+void				clnt_destroy_env(t_clnt_env *env);
 t_err				clnt_init_ncurses(t_clnt_env *env);
+void				clnt_close_ncurses(t_clnt_env *env);
 t_err				clnt_connect_server(const char *addr, const char *port,
 						t_clnt_env *env);
+void				clnt_disconnect(t_clnt_env *env);
 void				clnt_main_loop(t_clnt_env *env);
 void				clnt_set_fd_select(t_clnt_env *env);
 void				clnt_do_select(t_clnt_env *env);
@@ -324,5 +334,7 @@ void				clnt_read(t_cbuff *cbuff_read, int fd_sock);
 void				clnt_write(t_cbuff *cbuff_write, int fd_sock);
 void				clnt_interpret_new_data(t_clnt_env *env);
 void				clnt_display(t_clnt_env *env);
+void				clnt_set_signal(void);
+void				clnt_close_client(void);
 
 #endif

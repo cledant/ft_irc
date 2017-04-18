@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 18:52:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 09:25:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 12:06:27 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	connect_to_serv(t_clnt_env *env)
 	}
 	freeaddrinfo(env->result);
 	env->result = NULL;
+	env->state = CONNECTED;
 	return (0);
 }
 

@@ -6,13 +6,13 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 16:25:51 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/17 12:00:32 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 13:14:29 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-t_err		clnt_init_env(t_clnt_env *env)
+t_err		clnt_init_env(t_clnt_env *env, char **argv)
 {
 	struct rlimit	r_lim;
 	struct protoent	*pe;
@@ -35,5 +35,6 @@ t_err		clnt_init_env(t_clnt_env *env)
 		return (ERR_OPEN_SOCKET);
 	}
 	env->should_loop = 1;
+	env->file_name = argv[0];
 	return (ERR_NONE);
 }
