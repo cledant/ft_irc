@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:42:34 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 22:42:35 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,5 +348,6 @@ int					clnt_interpret_server_cmd(t_clnt_env *env);
 */
 int					clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env);
 int					clnt_cmd_disconnect(const t_cmd_arg *arg, t_clnt_env *env);
+int					clnt_cmd_exit(const t_cmd_arg *arg, t_clnt_env *env);
 
 #endif
