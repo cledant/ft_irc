@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 13:36:00 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 14:30:26 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void		print_err_ncurses(const t_err code, const char *str,
 		wprintw(env->out, "\n%s : Can't find server", str);
 	else if (code == ERR_SERV_CONNECT)
 		wprintw(env->out, "\n%s : Can't connect to server", str);
+	wrefresh(env->out);
 }
 
 static t_err	default_connect(int argc, char **argv, t_clnt_env *env)
@@ -73,7 +74,10 @@ static t_err	default_connect(int argc, char **argv, t_clnt_env *env)
 	t_err	err;
 
 	if (argc == 1)
+	{
 		wprintw(env->out, "\nPlease use /connect to connect a server!");
+		wrefresh(env->out);
+	}
 	else if (argc == 2)
 	{
 		if ((err = clnt_connect_server(argv[1], DEFAULT_PORT, env))

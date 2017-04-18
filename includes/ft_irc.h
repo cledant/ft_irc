@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 13:27:39 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 16:35:35 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,11 +330,14 @@ void				clnt_main_loop(t_clnt_env *env);
 void				clnt_set_fd_select(t_clnt_env *env);
 void				clnt_do_select(t_clnt_env *env);
 void				clnt_check_fd_select(t_clnt_env *env);
-void				clnt_read(t_cbuff *cbuff_read, int fd_sock);
-void				clnt_write(t_cbuff *cbuff_write, int fd_sock);
+void				clnt_read(t_cbuff *cbuff_read, int fd_sock,
+						t_clnt_env *env);
+void				clnt_write(t_cbuff *cbuff_write, int fd_sock,
+						t_clnt_env *env);
 void				clnt_interpret_new_data(t_clnt_env *env);
-void				clnt_display(t_clnt_env *env);
 void				clnt_set_signal(void);
 void				clnt_close_client(void);
+void				clnt_interpret_prompt_cmd(t_clnt_env *env);
+void				clnt_interpret_server_cmd(t_clnt_env *env);
 
 #endif
