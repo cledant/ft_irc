@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clnt_interpret_server_cmd.c                        :+:      :+:    :+:   */
+/*   clnt_cmd_connect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/18 16:23:57 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:42:59 by cledant          ###   ########.fr       */
+/*   Created: 2017/04/18 18:32:40 by cledant           #+#    #+#             */
+/*   Updated: 2017/04/18 18:38:16 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-int		clnt_interpret_server_cmd(t_clnt_env *env)
+int		clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env)
 {
-	cbuff_dequeue(env->cbuff_read, CBUFF_SIZE);
-	wprintw(env->out, env->cbuff_read->dequeue_buff);
+	(void)arg;
+	(void)env;
 	return (1);
 }

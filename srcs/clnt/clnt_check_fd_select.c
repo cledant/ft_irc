@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 12:41:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 16:36:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 18:37:54 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		clnt_check_fd_select(t_clnt_env *env)
 		wgetnstr(env->in, env->buff, MAX_MSG_LEN - 1);
 		end = ft_strlen(env->buff);
 		if (end > 0)
-			env->buff[end] = '\n';
+			env->buff[end] = CLNT_END_CMD_CHAR;
 		wclear(env->in);
 		wrefresh(env->in);
 		(env->select_do)--;

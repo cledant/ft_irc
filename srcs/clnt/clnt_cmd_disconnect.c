@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clnt_main_loop.c                                   :+:      :+:    :+:   */
+/*   clnt_cmd_disconnect.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 12:00:02 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:14:54 by cledant          ###   ########.fr       */
+/*   Created: 2017/04/18 18:20:26 by cledant           #+#    #+#             */
+/*   Updated: 2017/04/18 18:48:44 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-void		clnt_main_loop(t_clnt_env *env)
+int		clnt_cmd_disconnect(const t_cmd_arg *arg, t_clnt_env *env)
 {
-	while (env->should_loop)
+	if (arg->end - arg->begin - 1 == 10)
 	{
-		wrefresh(env->out);
-		wresize(env->out, LINES - 1, COLS);
-		mvwin(env->in, LINES - 1, 0);
-		wmove(env->out, LINES - 2, 0);
-		clnt_set_fd_select(env);
-		clnt_do_select(env);
-		if (env->select_do > 0)
-			clnt_check_fd_select(env);
-		if (ft_strlen(env->buff) > 0)
-		{
-			clnt_interpret_prompt_cmd(env);
-			ft_bzero(&(env->buff), MAX_MSG_LEN + 1);
-		}
 		if (env->state == CONNECTED)
-			clnt_interpret_server_cmd(env);
+			clnt_disconnect(env);
+		else
+			wprintw(env->out, "\nAlready disconnected from server!");
 	}
+	else
+		wprintw(env->out, "\nInvalid use of /disconnect");
+	return (1);
 }

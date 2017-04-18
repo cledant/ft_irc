@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 16:35:35 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/18 18:42:34 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define CBUFF_SIZE 8192
 # define DEFAULT_IP "localhost"
 # define DEFAULT_PORT "4242"
+# define CLNT_BEGIN_CMD "/"
+# define CLNT_END_CMD "\n"
+# define CLNT_END_CMD_CHAR '\n'
 
 # define FD_NEW_DATA 1
 # define FD_NO_DATA 0
@@ -337,7 +340,13 @@ void				clnt_write(t_cbuff *cbuff_write, int fd_sock,
 void				clnt_interpret_new_data(t_clnt_env *env);
 void				clnt_set_signal(void);
 void				clnt_close_client(void);
-void				clnt_interpret_prompt_cmd(t_clnt_env *env);
-void				clnt_interpret_server_cmd(t_clnt_env *env);
+int					clnt_interpret_prompt_cmd(t_clnt_env *env);
+int					clnt_interpret_server_cmd(t_clnt_env *env);
+
+/*
+** CLIENT COMMAND FUNCTIONS
+*/
+int					clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env);
+int					clnt_cmd_disconnect(const t_cmd_arg *arg, t_clnt_env *env);
 
 #endif
