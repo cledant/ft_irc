@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 18:32:40 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 15:17:27 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:47:07 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int		clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env)
 	}
 	else
 	{
-		ft_memcpy(first_arg, ptr_first_arg + 1, ptr_second_arg - ptr_first_arg - 1);
+		ft_memcpy(first_arg, ptr_first_arg + 1,
+			ptr_second_arg - ptr_first_arg - 1);
 		ft_memcpy(second_arg, ptr_second_arg + 1, arg->end - ptr_second_arg);
 		if (env->state == CONNECTED)
 			clnt_disconnect(env);

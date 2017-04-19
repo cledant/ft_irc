@@ -6,13 +6,13 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 18:52:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 22:35:16 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:45:32 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int	connect_to_serv(t_clnt_env *env)
+static inline int	connect_to_serv(t_clnt_env *env)
 {
 	struct addrinfo		*rp;
 
@@ -34,8 +34,17 @@ static int	connect_to_serv(t_clnt_env *env)
 	return (0);
 }
 
-t_err		clnt_connect_server(const char *addr, const char *port,
-				t_clnt_env *env)
+static inline void	set_hints(struct addrinfo *hints,
+						const struct protoent *pe)
+{
+	ft_bzero(hints, sizeof(struct addrinfo));
+	hints->ai_family = AF_INET;
+	hints->ai_socktype = SOCK_STREAM;
+	hints->ai_protocol = pe->p_proto;
+}
+
+t_err				clnt_connect_server(const char *addr, const char *port,
+						t_clnt_env *env)
 {
 	struct addrinfo		hints;
 	struct protoent		*pe;
@@ -54,10 +63,7 @@ t_err		clnt_connect_server(const char *addr, const char *port,
 		close(env->socket);
 		return (ERR_OPEN_SOCKET);
 	}
-	ft_bzero(&hints, sizeof(struct addrinfo));
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = pe->p_proto;
+	set_hints(&hints, pe);
 	if (getaddrinfo(addr, port, &hints, &(env->result)) != 0)
 		return (ERR_SERV_NOT_FOUND);
 	if (connect_to_serv(env) == 0)

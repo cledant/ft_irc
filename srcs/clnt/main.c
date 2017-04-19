@@ -6,13 +6,13 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 14:30:26 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:49:00 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int		print_err(const t_err code, const char *str)
+static int				print_err(const t_err code, const char *str)
 {
 	if (code == ERR_NB_ARG)
 		printf("Usage : %s [machine [port]]\n", str);
@@ -41,8 +41,8 @@ static int		print_err(const t_err code, const char *str)
 	return (-1);
 }
 
-static void		print_err_ncurses(const t_err code, const char *str,
-					t_clnt_env *env)
+static inline void		print_err_ncurses(const t_err code, const char *str,
+							t_clnt_env *env)
 {
 	if (code == ERR_NB_ARG)
 		wprintw(env->out, "\nUsage : %s [machine [port]]", str);
@@ -69,7 +69,7 @@ static void		print_err_ncurses(const t_err code, const char *str,
 	wrefresh(env->out);
 }
 
-static t_err	default_connect(int argc, char **argv, t_clnt_env *env)
+static inline t_err		default_connect(int argc, char **argv, t_clnt_env *env)
 {
 	t_err	err;
 
@@ -95,7 +95,7 @@ static t_err	default_connect(int argc, char **argv, t_clnt_env *env)
 	return (ERR_NONE);
 }
 
-int		main(int argc, char **argv)
+int						main(int argc, char **argv)
 {
 	t_clnt_env		env;
 	t_err			err;
@@ -112,7 +112,7 @@ int		main(int argc, char **argv)
 		clnt_close_ncurses(&env);
 		clnt_destroy_env(&env);
 		return (print_err(err, argv[0]));
-	}	
+	}
 	if ((err = default_connect(argc, argv, &env)) != ERR_NONE)
 	{
 		clnt_disconnect(&env);
