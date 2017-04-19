@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 22:41:16 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 12:15:00 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
 		return (clnt_cmd_disconnect(arg, env));
 	else if (ft_strcmp(cmd_str, "exit") == 0)
 		return (clnt_cmd_exit(arg, env));
-/*	else if (ft_strcmp(cmd_str, "nick") == 0)
+	else if (ft_strcmp(cmd_str, "nick") == 0)
 		return (clnt_cmd_nick(arg, env));
 	else if (ft_strcmp(cmd_str, "join") == 0)
 		return (clnt_cmd_join(arg, env));
 	else if (ft_strcmp(cmd_str, "leave") == 0)
-		return (clnt_cmd_part(cmd_str, arg, env));
+		return (clnt_cmd_part(arg, env));
 	else if (ft_strcmp(cmd_str, "quit") == 0)
 		return (clnt_cmd_quit(arg, env));
 	else if (ft_strcmp(cmd_str, "msg") == 0)
-		return (clnt_cmd_privmsg(arg, env));
+		return (clnt_cmd_msg(arg, env));
 	else if (ft_strcmp(cmd_str, "who") == 0)
-		return (srv_cmd_names(arg, env));*/
+		return (clnt_cmd_who(arg, env));
 	wprintw(env->out, "\nUnknown command !");
 	return (0);
 }
@@ -43,7 +43,7 @@ static inline int		get_cmd(const t_cmd_arg *arg, t_clnt_env *env)
 	char	*space;
 	char	cmd_str[MAX_PACKET_SIZE + 1];
 
-	size = arg->end - arg->begin - 1;
+	size = arg->end - arg->begin + 1;
 	if (size == 0 || size > MAX_MSG_LEN || ft_isspace(*(arg->begin + 1))
 			== 1)
 		return (0);

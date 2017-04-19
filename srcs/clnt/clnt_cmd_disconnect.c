@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 18:20:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:48:44 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 09:29:58 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		clnt_cmd_disconnect(const t_cmd_arg *arg, t_clnt_env *env)
 {
-	if (arg->end - arg->begin - 1 == 10)
+	if (arg->end - arg->begin == 11)
 	{
 		if (env->state == CONNECTED)
 			clnt_disconnect(env);
