@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 12:36:23 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:27:19 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef enum		e_target
 	TARGET_CHAN,
 	TARGET_USER,
 	TARGET_SENDER,
+	TARGET_USER_AND_SENDER,
 	ONE_TIME_TO_USER_WITH_COMMON_CHAN,
 	TARGET_CHAN_AND_SENDER,
 	NO_TARGET,

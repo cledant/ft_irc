@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:54:29 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/31 12:15:35 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:23:38 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static inline int		create_msg_to_send(t_cmd *cmd, const int fd_sock,
 	}
 	else
 	{
-		cmd->target = TARGET_USER;
+		cmd->target = TARGET_USER_AND_SENDER;
 		if ((cmd->fd_target = srv_seek_user_fd(env, parse->user_name)) == -1)
 			return (-1);
 		cmd->id_chan = -1;
