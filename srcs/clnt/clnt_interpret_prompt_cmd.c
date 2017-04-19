@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 12:15:00 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 12:43:41 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
 	else if (ft_strcmp(cmd_str, "join") == 0)
 		return (clnt_cmd_join(arg, env));
 	else if (ft_strcmp(cmd_str, "leave") == 0)
-		return (clnt_cmd_part(arg, env));
+		return (clnt_cmd_leave(arg, env));
 	else if (ft_strcmp(cmd_str, "quit") == 0)
 		return (clnt_cmd_quit(arg, env));
 	else if (ft_strcmp(cmd_str, "msg") == 0)
