@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 12:43:41 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 14:50:02 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static inline int		get_cmd(const t_cmd_arg *arg, t_clnt_env *env)
 		return (0);
 	ft_bzero(cmd_str, MAX_PACKET_SIZE + 1);
 	if ((space = ft_strnstr(arg->begin, " ", size)) == NULL)
-		ft_memcpy(cmd_str, arg->begin + 1, arg->end - 1 - arg->begin);
+		ft_memcpy(cmd_str, arg->begin + 1, arg->end - arg->begin);
 	else
 		ft_memcpy(cmd_str, arg->begin + 1, space - 1 - arg->begin);
 	finish_cmd(cmd_str, arg, env);
@@ -65,6 +65,8 @@ int						clnt_interpret_prompt_cmd(t_clnt_env *env)
 		return (0);
 	if ((arg.end = ft_strnstr(env->buff, CLNT_END_CMD, MAX_MSG_LEN)) == NULL)
 		return (0);
+	*arg.end = '\0';
+	arg.end--;
 	if (arg.begin > arg.end || arg.begin != &(env->buff[0]))
 		return (0);
 	if (get_cmd(&arg, env) == 0)

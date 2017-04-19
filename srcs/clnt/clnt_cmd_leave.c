@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 12:34:18 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 13:18:19 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 15:10:06 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ int		clnt_cmd_leave(const t_cmd_arg *arg, t_clnt_env *env)
 		wprintw(env->out, "\nMessage size error !");
 		return (0);
 	}
-	if (arg->end - arg->begin == 6)
+	if (arg->end - arg->begin == 5)
 	{
 		ft_strcat(env->cbuff_write->enqueue_buff, ":PART ");
 		ft_strcat(env->cbuff_write->enqueue_buff, env->last_chan);	
 		ft_strcat(env->cbuff_write->enqueue_buff, END_PACKET);
+		cbuff_enqueue(env->cbuff_write, ft_strlen(
+			env->cbuff_write->enqueue_buff));
 		return (1);
 	}
 	if (arg->end - arg->begin < 7)
@@ -33,6 +35,7 @@ int		clnt_cmd_leave(const t_cmd_arg *arg, t_clnt_env *env)
 	}
 	ft_strcat(env->cbuff_write->enqueue_buff, ":PART ");
 	ft_strcat(env->cbuff_write->enqueue_buff, arg->begin + 7);
+	ft_strcat(env->cbuff_write->enqueue_buff, END_PACKET);
 	cbuff_enqueue(env->cbuff_write, ft_strlen(env->cbuff_write->enqueue_buff));
 	return (1);
 }
