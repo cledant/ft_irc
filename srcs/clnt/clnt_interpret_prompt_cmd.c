@@ -6,22 +6,16 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 14:50:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 20:15:41 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
-							t_clnt_env *env)
+static inline int		is_online_case(const char *cmd_str,
+							const t_cmd_arg *arg, t_clnt_env *env)
 {
-	if (ft_strcmp(cmd_str, "connect") == 0)
-		return (clnt_cmd_connect(arg, env));
-	else if (ft_strcmp(cmd_str, "disconnect") == 0)
-		return (clnt_cmd_disconnect(arg, env));
-	else if (ft_strcmp(cmd_str, "exit") == 0)
-		return (clnt_cmd_exit(arg, env));
-	else if (ft_strcmp(cmd_str, "nick") == 0)
+	if (ft_strcmp(cmd_str, "nick") == 0)
 		return (clnt_cmd_nick(arg, env));
 	else if (ft_strcmp(cmd_str, "join") == 0)
 		return (clnt_cmd_join(arg, env));
@@ -34,6 +28,27 @@ static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
 	else if (ft_strcmp(cmd_str, "who") == 0)
 		return (clnt_cmd_who(arg, env));
 	wprintw(env->out, "\nUnknown command !");
+	return (0);
+}
+
+static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
+							t_clnt_env *env)
+{
+	if (ft_strcmp(cmd_str, "connect") == 0)
+		return (clnt_cmd_connect(arg, env));
+	else if (ft_strcmp(cmd_str, "disconnect") == 0)
+		return (clnt_cmd_disconnect(arg, env));
+	else if (ft_strcmp(cmd_str, "exit") == 0)
+		return (clnt_cmd_exit(arg, env));
+	if (env->state == CONNECTED)
+		return (is_online_case(cmd_str, arg, env));
+	else
+	{
+		if (clnt_is_str_online_only_cmd(cmd_str) == 1)
+			wprintw(env->out, "\nCan't use this command if not connected !");
+		else
+			wprintw(env->out, "\nUnknown command !");
+	}
 	return (0);
 }
 

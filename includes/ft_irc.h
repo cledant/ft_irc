@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 18:27:19 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/19 20:09:39 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ void				clnt_set_signal(void);
 void				clnt_close_client(void);
 int					clnt_interpret_prompt_cmd(t_clnt_env *env);
 int					clnt_interpret_server_cmd(t_clnt_env *env);
+int					clnt_is_str_online_only_cmd(const char *cmd_str);
 
 /*
 ** CLIENT COMMAND FUNCTIONS
