@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/20 17:04:44 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/20 18:56:30 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,8 @@ SRCS_NAME_CLIENT = main.c clnt_init_env.c clnt_connect_server.c clnt_init_ncurse
 				   clnt_parse_smsg.c clnt_disp_smsg.c clnt_disp_second_cmd_check.c \
 				   clnt_disp_welcome.c clnt_disp_nick.c clnt_check_other_cmd.c \
 				   clnt_parse_nick_join_part_quit.c clnt_disp_join.c \
-				   clnt_disp_part.c clnt_disp_quit.c
+				   clnt_disp_part.c clnt_disp_quit.c clnt_disp_privmsg.c \
+				   clnt_parse_privmsg.c
 
 SRCS_PATH_CLIENT = ./srcs/clnt
 

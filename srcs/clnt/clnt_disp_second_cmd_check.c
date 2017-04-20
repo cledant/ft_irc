@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 12:50:56 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 18:22:23 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 18:57:51 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static inline int		is_welcome_cmd(const char *cmd_part, t_disp_cmd *cmd)
 	return (1);
 }
 
-static inline int		first_check(t_disp_cmd *cmd, const t_cmd_arg *arg,
-							size_t *len, char **ptr_space_one)
+static inline int		first_check(const t_cmd_arg *arg, size_t *len,
+							char **ptr_space_one)
 {
 	if ((*ptr_space_one = ft_strnstr(arg->begin, " ",
 			arg->end - arg->begin - 1)) == NULL)
@@ -39,7 +39,7 @@ int						clnt_disp_second_cmd_check(t_disp_cmd *cmd,
 	char	cmd_part[MAX_CMD_SIZE + 1];
 	size_t	len;
 
-	if (first_check(cmd, arg, &len, &ptr_space_one) == 0)
+	if (first_check(arg, &len, &ptr_space_one) == 0)
 		return (0);
 	ft_bzero(&cmd_part, MAX_CMD_SIZE + 1);
 	if ((ptr_space_two = ft_strnstr(ptr_space_one + 1, " ",
