@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 18:04:26 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 20:42:39 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ typedef struct		s_disp_cmd
 	t_func			function;
 	char			nick[MAX_NICK_LEN + 1];
 	char			msg_chan[MAX_CHAN_NAME_LEN + 1];
+	char			msg_nbr[MAX_CHAN_NAME_LEN + 1];
 	char			msg_nick[MAX_NICK_LEN + 1];
 	char			msg[MAX_PACKET_SIZE + 1];
 }					t_disp_cmd;
@@ -385,6 +386,8 @@ int					clnt_parse_nick_join_part_quit(const t_cmd_arg *arg,
 						const t_func type);
 int					clnt_parse_privmsg(const t_cmd_arg *arg, t_disp_cmd *cmd,
 						const char *begin);
+int					clnt_parse_names(const t_cmd_arg *arg, t_disp_cmd *cmd,
+						const char *begin);
 
 /*
 ** CLIENT DISPLAY SERVER MSG FUNCTIONS
@@ -396,5 +399,6 @@ int					clnt_disp_join(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_part(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_quit(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_privmsg(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_names(const t_disp_cmd *cmd, t_clnt_env *env);
 
 #endif

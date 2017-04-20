@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 11:17:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 18:57:02 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 20:15:27 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static inline int		disp_cmd(t_disp_cmd *cmd, t_clnt_env *env)
 		return (clnt_disp_quit(cmd, env));
 	else if (cmd->function == PRIVMSG)
 		return (clnt_disp_privmsg(cmd, env));
-/*	else if (cmd->function == NAMES)
-		return (clnt_disp_names(cmd, arg, env, fd_sock));*/
+	else if (cmd->function == NAMES)
+		return (clnt_disp_names(cmd, env));
 	else if (cmd->function == SMSG)
 		return (clnt_disp_smsg(cmd, env));
 	else if (cmd->function == WELCOME)

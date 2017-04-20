@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 16:05:58 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 18:03:57 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 19:19:33 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		clnt_check_other_cmd(const char *cmd_part, const t_cmd_arg *arg,
 		return (clnt_parse_nick_join_part_quit(arg, cmd, begin, QUIT));
 	else if (ft_strcmp(cmd_part, "PRIVMSG") == 0)
 		return (clnt_parse_privmsg(arg, cmd, begin));
-/*	else if (ft_strcmp(cmd_part, "NAMES") == 0)
-		return (clnt_parse_names(arg, cmd, begin));*/
+	else if (ft_strcmp(cmd_part, "NAMES") == 0)
+		return (clnt_parse_names(arg, cmd, begin));
 	return (1);
 }
