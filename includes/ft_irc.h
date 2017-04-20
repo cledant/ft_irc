@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 13:43:44 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:46:22 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,9 @@ int					clnt_disp_first_cmd_check(const char *cmd_str,
 						t_disp_cmd *cmd, const t_cmd_arg *arg);
 int					clnt_disp_second_cmd_check(t_disp_cmd *cmd,
 						const t_cmd_arg *arg);
+int					clnt_check_other_cmd(const char *cmd_part,
+						const t_cmd_arg *arg, t_disp_cmd *cmd,
+						const char *begin);
 
 /*
 ** CLIENT COMMAND FUNCTIONS
@@ -377,11 +380,14 @@ int					clnt_cmd_msg(const t_cmd_arg *arg, t_clnt_env *env);
 ** CLIENT PARSE SERVER MSG FUNCTIONS
 */
 int					clnt_parse_smsg(const t_cmd_arg *arg, t_disp_cmd *cmd);
+int					clnt_parse_nick(const t_cmd_arg *arg, t_disp_cmd *cmd,
+						const char *begin);
 
 /*
 ** CLIENT DISPLAY SERVER MSG FUNCTIONS
 */
 int					clnt_disp_smsg(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_welcome(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_nick(const t_disp_cmd *cmd, t_clnt_env *env);
 
 #endif

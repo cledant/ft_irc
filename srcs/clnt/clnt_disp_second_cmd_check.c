@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 12:50:56 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 13:53:56 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:33:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ int		clnt_disp_second_cmd_check(t_disp_cmd *cmd, const t_cmd_arg *arg)
 		if (is_welcome_cmd(cmd_part, cmd) == 0)
 			return (0);
 	}
-/*	else
+	else
 	{
 		if ((len = ptr_space_two - ptr_space_one - 1) == 0)
 			return (0);
 		ft_memcpy(&cmd_part, ptr_space_one + 1, len);
-		//a voire;
-	}*/
+		if (clnt_check_other_cmd(cmd_part, arg, cmd, ptr_space_two) == 0)
+			return (0);
+	}
 	return (1);
 }
