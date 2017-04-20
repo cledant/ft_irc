@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 16:46:22 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 17:29:00 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,8 +380,9 @@ int					clnt_cmd_msg(const t_cmd_arg *arg, t_clnt_env *env);
 ** CLIENT PARSE SERVER MSG FUNCTIONS
 */
 int					clnt_parse_smsg(const t_cmd_arg *arg, t_disp_cmd *cmd);
-int					clnt_parse_nick(const t_cmd_arg *arg, t_disp_cmd *cmd,
-						const char *begin);
+int					clnt_parse_nick_join_part_quit(const t_cmd_arg *arg,
+						t_disp_cmd *cmd, const char *begin,
+						const t_func type);
 
 /*
 ** CLIENT DISPLAY SERVER MSG FUNCTIONS
@@ -389,5 +390,8 @@ int					clnt_parse_nick(const t_cmd_arg *arg, t_disp_cmd *cmd,
 int					clnt_disp_smsg(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_welcome(const t_disp_cmd *cmd, t_clnt_env *env);
 int					clnt_disp_nick(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_join(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_part(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_quit(const t_disp_cmd *cmd, t_clnt_env *env);
 
 #endif
