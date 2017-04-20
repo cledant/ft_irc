@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 20:09:39 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 11:08:19 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,15 @@ typedef struct		s_cmd
 	int				id_chan;
 	char			cmd[MAX_PACKET_SIZE + 1];
 }					t_cmd;
+
+typedef struct		s_disp_cmd
+{
+	t_func			function;
+	char			nick[MAX_NICK_LEN + 1];
+	char			msg_chan[MAX_CHAN_LEN + 1];
+	char			msg_nick[MAX_NICK_LEN + 1];
+	char			msg[MAX_PACKET_SIZE + 1];
+}					t_disp_cmd;
 
 typedef struct		s_env
 {
@@ -343,6 +352,7 @@ void				clnt_set_signal(void);
 void				clnt_close_client(void);
 int					clnt_interpret_prompt_cmd(t_clnt_env *env);
 int					clnt_interpret_server_cmd(t_clnt_env *env);
+int					clnt_read_cmd_server(t_clnt_env *env, t_disp_cmd *cmd);
 int					clnt_is_str_online_only_cmd(const char *cmd_str);
 
 /*
