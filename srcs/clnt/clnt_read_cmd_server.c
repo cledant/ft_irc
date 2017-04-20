@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 11:17:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 11:20:01 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 12:18:23 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,9 @@ static inline int		error_advance_head(t_clnt_env *env, const size_t size)
 	return (0);
 }
 
-static inline int		disp_cmd(t_disp_cmd *cmd, const t_cmd_arg *arg,
-							t_clnt_env *env)
+static inline int		disp_cmd(t_disp_cmd *cmd, t_clnt_env *env)
 {
-	if (cmd->function == NICK)
+/*	if (cmd->function == NICK)
 		return (clnt_disp_nick(cmd, arg, env, fd_sock));
 	else if (cmd->function == JOIN)
 		return (clnt_disp_join(cmd, arg, env, fd_sock));
@@ -32,11 +31,11 @@ static inline int		disp_cmd(t_disp_cmd *cmd, const t_cmd_arg *arg,
 	else if (cmd->function == PRIVMSG)
 		return (clnt_disp_privmsg(cmd, arg, env, fd_sock));
 	else if (cmd->function == NAMES)
-		return (clnt_disp_names(cmd, arg, env, fd_sock));
-	else if (cmd->function == SMSG)
-		return (clnt_disp_names(cmd, arg, env, fd_sock));
-	else if (cmd->function == WELCOME)
-		return (clnt_disp_names(cmd, arg, env, fd_sock));
+		return (clnt_disp_names(cmd, arg, env, fd_sock));*/
+	if (cmd->function == SMSG)
+		return (clnt_disp_smsg(cmd, env));
+//	else if (cmd->function == WELCOME)
+//		return (clnt_disp_welcome(cmd, arg, env, fd_sock));
 	return (0);
 }
 
@@ -57,7 +56,7 @@ static inline int		get_cmd(const t_cmd_arg *arg, t_clnt_env *env,
 	ft_memcpy(cmd_str, arg->begin + 1, space - 1 - arg->begin);
 	if (clnt_disp_first_cmd_check(cmd_str, cmd, arg) == 0)
 		return (0);
-	disp_cmd(cmd, arg, env);
+	disp_cmd(cmd, env);
 	return (1);
 }
 

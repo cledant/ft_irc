@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 11:08:19 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 12:18:47 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ typedef struct		s_disp_cmd
 {
 	t_func			function;
 	char			nick[MAX_NICK_LEN + 1];
-	char			msg_chan[MAX_CHAN_LEN + 1];
+	char			msg_chan[MAX_CHAN_NAME_LEN + 1];
 	char			msg_nick[MAX_NICK_LEN + 1];
 	char			msg[MAX_PACKET_SIZE + 1];
 }					t_disp_cmd;
@@ -354,6 +354,8 @@ int					clnt_interpret_prompt_cmd(t_clnt_env *env);
 int					clnt_interpret_server_cmd(t_clnt_env *env);
 int					clnt_read_cmd_server(t_clnt_env *env, t_disp_cmd *cmd);
 int					clnt_is_str_online_only_cmd(const char *cmd_str);
+int					clnt_disp_first_cmd_check(const char *cmd_str,
+						t_disp_cmd *cmd, const t_cmd_arg *arg);
 
 /*
 ** CLIENT COMMAND FUNCTIONS
@@ -367,5 +369,16 @@ int					clnt_cmd_leave(const t_cmd_arg *arg, t_clnt_env *env);
 int					clnt_cmd_quit(const t_cmd_arg *arg, t_clnt_env *env);
 int					clnt_cmd_who(const t_cmd_arg *arg, t_clnt_env *env);
 int					clnt_cmd_msg(const t_cmd_arg *arg, t_clnt_env *env);
+
+/*
+** CLIENT PARSE SERVER MSG FUNCTIONS
+*/
+int					clnt_parse_smsg(const t_cmd_arg *arg, t_disp_cmd *cmd);
+
+
+/*
+** CLIENT DISPLAY SERVER MSG FUNCTIONS
+*/
+int					clnt_disp_smsg(const t_disp_cmd *cmd, t_clnt_env *env);
 
 #endif
