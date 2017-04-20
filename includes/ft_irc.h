@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 12:18:47 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 13:43:44 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define MAX_NICK_LEN 9
 # define MAX_NB_CHAN 128
 # define MAX_CHAN_NAME_LEN 50
+# define MAX_CMD_SIZE 20
 # define BEGIN_PACKET ":"
 # define END_PACKET "\n"
 # define CBUFF_SIZE 8192
@@ -356,6 +357,8 @@ int					clnt_read_cmd_server(t_clnt_env *env, t_disp_cmd *cmd);
 int					clnt_is_str_online_only_cmd(const char *cmd_str);
 int					clnt_disp_first_cmd_check(const char *cmd_str,
 						t_disp_cmd *cmd, const t_cmd_arg *arg);
+int					clnt_disp_second_cmd_check(t_disp_cmd *cmd,
+						const t_cmd_arg *arg);
 
 /*
 ** CLIENT COMMAND FUNCTIONS
@@ -375,10 +378,10 @@ int					clnt_cmd_msg(const t_cmd_arg *arg, t_clnt_env *env);
 */
 int					clnt_parse_smsg(const t_cmd_arg *arg, t_disp_cmd *cmd);
 
-
 /*
 ** CLIENT DISPLAY SERVER MSG FUNCTIONS
 */
 int					clnt_disp_smsg(const t_disp_cmd *cmd, t_clnt_env *env);
+int					clnt_disp_welcome(const t_disp_cmd *cmd, t_clnt_env *env);
 
 #endif

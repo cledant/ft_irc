@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clnt_parse_smsg.c                                  :+:      :+:    :+:   */
+/*   clnt_disp_welcome.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/20 11:58:23 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 12:35:49 by cledant          ###   ########.fr       */
+/*   Created: 2017/04/20 13:41:56 by cledant           #+#    #+#             */
+/*   Updated: 2017/04/20 13:41:58 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-int			clnt_parse_smsg(const t_cmd_arg *arg, t_disp_cmd *cmd)
+int		clnt_disp_welcome(const t_disp_cmd *cmd, t_clnt_env *env)
 {
-	char	*ptr_space;
-	size_t	size_msg;
-
-	cmd->function = SMSG;
-	if ((ptr_space = ft_strnstr(arg->begin, " ", arg->end - arg->begin - 1))
-			== NULL)
-		return (0);
-	size_msg = arg->end - ptr_space;
-	if (size_msg == 0 || size_msg > MAX_MSG_LEN)
-		return (0);
-	ft_memcpy(cmd->msg, ptr_space + 1, size_msg - 1);
+	wprintw(env->out, "\nWelcome to this server : %s!", cmd->nick);
+	wrefresh(env->out);
 	return (1);
 }
