@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 20:15:41 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:29:08 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline int		is_online_case(const char *cmd_str,
 		return (clnt_cmd_msg(arg, env));
 	else if (ft_strcmp(cmd_str, "who") == 0)
 		return (clnt_cmd_who(arg, env));
-	wprintw(env->out, "\nUnknown command !");
+	wprintw(env->out, "Unknown command !\n");
 	return (0);
 }
 
@@ -45,9 +45,9 @@ static inline int		finish_cmd(const char *cmd_str, const t_cmd_arg *arg,
 	else
 	{
 		if (clnt_is_str_online_only_cmd(cmd_str) == 1)
-			wprintw(env->out, "\nCan't use this command if not connected !");
+			wprintw(env->out, "Can't use this command if not connected !\n");
 		else
-			wprintw(env->out, "\nUnknown command !");
+			wprintw(env->out, "Unknown command !\n");
 	}
 	return (0);
 }

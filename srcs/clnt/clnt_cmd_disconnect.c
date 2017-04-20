@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 18:20:26 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 15:17:58 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:22:54 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int		clnt_cmd_disconnect(const t_cmd_arg *arg, t_clnt_env *env)
 		if (env->state == CONNECTED)
 			clnt_disconnect(env);
 		else
-			wprintw(env->out, "\nAlready disconnected from server!");
+			wprintw(env->out, "Already disconnected from server!\n");
 	}
 	else
-		wprintw(env->out, "\nInvalid use of /disconnect");
+		wprintw(env->out, "Invalid use of /disconnect\n");
 	return (1);
 }

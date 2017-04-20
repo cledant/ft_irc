@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 16:44:09 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 16:48:47 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:26:36 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		clnt_disp_nick(const t_disp_cmd *cmd, t_clnt_env *env)
 {
-	wprintw(env->out, "\n%s changed nick into %s", cmd->msg, cmd->nick);
+	wprintw(env->out, "%s changed nick into %s\n", cmd->msg, cmd->nick);
 	wrefresh(env->out);
 	return (1);
 }

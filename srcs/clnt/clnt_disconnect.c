@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 12:07:08 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 18:45:54 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:25:44 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	clnt_disconnect(t_clnt_env *env)
 {
 	if (env->state == CONNECTED)
 	{
-		wprintw(env->out, "\nDisconnected from server !");
+		wprintw(env->out, "Disconnected from server !\n");
 		wrefresh(env->out);
 	}
 	env->state = DISCONNECTED;

@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 18:32:40 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 19:10:33 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:21:37 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline void		no_port(char *first_arg, t_clnt_env *env,
 		clnt_disconnect(env);
 	if (clnt_connect_server(first_arg, DEFAULT_PORT, env) != ERR_NONE)
 	{
-		wprintw(env->out, "\nCouldn't connect to server !");
+		wprintw(env->out, "Couldn't connect to server !\n");
 		clnt_disconnect(env);
 	}
 }
@@ -30,12 +30,12 @@ static inline int		check_first_arg(char **ptr_first_arg, t_clnt_env *env,
 {
 	if ((*ptr_first_arg = ft_strchr(arg->begin, ' ')) == NULL)
 	{
-		wprintw(env->out, "\nNot enough arguments for /connect");
+		wprintw(env->out, "Not enough arguments for /connect\n");
 		return (0);
 	}
 	if (arg->end - *ptr_first_arg == 0)
 	{
-		wprintw(env->out, "\nNot enough arguments for /connect");
+		wprintw(env->out, "Not enough arguments for /connect\n");
 		return (0);
 	}
 	return (1);
@@ -63,7 +63,7 @@ int						clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env)
 			clnt_disconnect(env);
 		if (clnt_connect_server(first_arg, second_arg, env) != ERR_NONE)
 		{
-			wprintw(env->out, "\nCouldn't connect to server !");
+			wprintw(env->out, "Couldn't connect to server !\n");
 			clnt_disconnect(env);
 		}
 	}

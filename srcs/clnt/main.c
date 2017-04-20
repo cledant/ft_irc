@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 18:49:00 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/20 21:30:25 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,27 @@ static inline void		print_err_ncurses(const t_err code, const char *str,
 							t_clnt_env *env)
 {
 	if (code == ERR_NB_ARG)
-		wprintw(env->out, "\nUsage : %s [machine [port]]", str);
+		wprintw(env->out, "Usage : %s [machine [port]]\n", str);
 	else if (code == ERR_ARG_NOT_INT || code == ERR_PORT_INTERVAL)
-		wprintw(env->out, "\n%s : Invalid port", str);
+		wprintw(env->out, "%s : Invalid port\n", str);
 	else if (code == ERR_GET_RLIM)
-		wprintw(env->out, "\n%s : Error getting system limits", str);
+		wprintw(env->out, "%s : Error getting system limits\n", str);
 	else if (code == ERR_MAX_FD)
-		wprintw(env->out, "\n%s : Invalid max fd", str);
+		wprintw(env->out, "%s : Invalid max fd\n", str);
 	else if (code == ERR_ALLOC_MEM)
-		wprintw(env->out, "\n%s : Can't allocate memory", str);
+		wprintw(env->out, "%s : Can't allocate memory\n", str);
 	else if (code == ERR_UNKNOWN_PROTOCOL)
-		wprintw(env->out, "\n%s : Unknown protocol requested", str);
+		wprintw(env->out, "%s : Unknown protocol requested\n", str);
 	else if (code == ERR_OPEN_SOCKET)
-		wprintw(env->out, "\n%s : Can't open socket", str);
+		wprintw(env->out, "%s : Can't open socket\n", str);
 	else if (code == ERR_BIND_SOCKET)
-		wprintw(env->out, "\n%s : Can't bind socket", str);
+		wprintw(env->out, "%s : Can't bind socket\n", str);
 	else if (code == ERR_LISTEN_SOCKET)
-		wprintw(env->out, "\n%s : Can't listen socket", str);
+		wprintw(env->out, "%s : Can't listen socket\n", str);
 	else if (code == ERR_SERV_NOT_FOUND)
-		wprintw(env->out, "\n%s : Can't find server", str);
+		wprintw(env->out, "%s : Can't find server\n", str);
 	else if (code == ERR_SERV_CONNECT)
-		wprintw(env->out, "\n%s : Can't connect to server", str);
+		wprintw(env->out, "%s : Can't connect to server\n", str);
 	wrefresh(env->out);
 }
 
@@ -75,7 +75,7 @@ static inline t_err		default_connect(int argc, char **argv, t_clnt_env *env)
 
 	if (argc == 1)
 	{
-		wprintw(env->out, "\nPlease use /connect to connect a server!");
+		wprintw(env->out, "Please use /connect to connect a server!\n");
 		wrefresh(env->out);
 	}
 	else if (argc == 2)
