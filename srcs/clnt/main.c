@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/23 15:40:45 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 21:30:25 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/28 11:39:20 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ static inline t_err		default_connect(int argc, char **argv, t_clnt_env *env)
 
 	if (argc == 1)
 	{
-		wprintw(env->out, "Please use /connect to connect a server!\n");
-		wrefresh(env->out);
+		if ((err = clnt_connect_server(DEFAULT_IP, DEFAULT_PORT, env))
+				!= ERR_NONE)
+			return (err);
 	}
 	else if (argc == 2)
 	{
