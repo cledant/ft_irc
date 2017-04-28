@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/20 20:54:20 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/28 11:24:09 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRCS_NAME_SERVEUR = main.c srv_client_write.c srv_init_fd_client.c \
 					srv_seek_user_fd.c srv_com_send_to_user.c srv_get_env.c \
 					srv_set_signal.c srv_shutdown.c srv_destroy_fd.c \
 					srv_close_srv_socket.c srv_close_all_client_socket.c \
-					srv_cmd_names.c srv_seek_userlist.c srv_itoa_buffer.c
+					srv_cmd_names.c srv_seek_userlist.c srv_itoa_buffer.c \
+					srv_is_nick_valid.c
 
 SRCS_PATH_SERVEUR = ./srcs/srv
 

@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 20:42:39 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/28 11:25:41 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ void				srv_notify_quit_common_chan(t_env *env, const int fd_stock,
 						const char *reason);
 void				srv_seek_userlist(t_env *env, t_userlist *u_list);
 void				srv_itoa_buffer(int n, char *buffer);
+int					srv_is_nick_valid(const char *name);
 
 /*
 ** SERVER COMMAND FUNCTIONS
