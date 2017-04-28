@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 16:54:29 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/19 18:23:38 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/28 11:53:41 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static inline int		create_msg_to_send(t_cmd *cmd, const int fd_sock,
 
 static inline int		check_privmsg_msg(t_privmsg *parse)
 {
-	if ((parse->second_arg_size = parse->buffer_size - parse->first_arg_size)
+	if ((parse->second_arg_size = parse->buffer_size - parse->first_arg_size - 1)
 			== 0)
 		return (-1);
 	if (parse->second_arg_size > MAX_MSG_LEN)

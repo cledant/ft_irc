@@ -6,13 +6,13 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/28 11:05:53 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/28 11:29:25 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/28 11:51:06 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int		exception_char(const int ch)
+static inline int		exception_char(const int ch)
 {
 	static char		*list = "+-=/*_&$|%";
 	size_t			c;
@@ -27,7 +27,7 @@ static int		exception_char(const int ch)
 	return (0);
 }
 
-int				srv_is_nick_valid(const char *name)
+int						srv_is_nick_valid(const char *name)
 {
 	size_t		c;
 
