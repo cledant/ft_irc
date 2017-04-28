@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/03/30 15:23:56 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/28 19:44:33 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int				set_error(t_cmd *cmd, const int fd_sock)
 	cmd->id_chan = -1;
 	cmd->fd_target = -1;
 	cmd->fd_sender = fd_sock;
+	ft_bzero(cmd->cmd, MAX_PACKET_SIZE + 1);
 	ft_strcat(cmd->cmd, BEGIN_PACKET);
 	ft_strcat(cmd->cmd, "SMSG Invalid Reason !");
 	ft_strcat(cmd->cmd, END_PACKET);
