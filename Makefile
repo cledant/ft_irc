@@ -6,7 +6,7 @@
 #    By: cledant <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 10:40:13 by cledant           #+#    #+#              #
-#    Updated: 2017/04/28 11:24:09 by cledant          ###   ########.fr        #
+#    Updated: 2017/04/29 10:17:59 by cledant          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,9 +95,11 @@ libft :
 	make -C $(LIBFT_PATH)
 
 $(NAME_SERVEUR) : $(OBJ_SRCS_SERVEUR) $(OBJ_SRCS_CBUFF)
+	make -C $(LIBFT_PATH)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -L$(LIBFT_PATH)
 
 $(NAME_CLIENT) : $(OBJ_SRCS_CLIENT) $(OBJ_SRCS_CBUFF)
+	make -C $(LIBFT_PATH)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS_CLNT) -L$(LIBFT_PATH)
 
 $(OBJ_DIR_NAME_SERVEUR)/%.o : $(SRCS_PATH_SERVEUR)/%.c
