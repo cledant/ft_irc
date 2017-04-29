@@ -6,13 +6,14 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/28 19:43:13 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/29 16:07:59 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.h"
 
-static int				set_error(t_cmd *cmd, const int fd_sock)
+static int				set_error(t_cmd *cmd, const int fd_sock,
+							const t_err error)
 {
 	cmd->function = SMSG;
 	cmd->target = TARGET_SENDER;
@@ -21,7 +22,10 @@ static int				set_error(t_cmd *cmd, const int fd_sock)
 	cmd->fd_sender = fd_sock;
 	ft_bzero(cmd->cmd, MAX_PACKET_SIZE + 1);
 	ft_strcat(cmd->cmd, BEGIN_PACKET);
-	ft_strcat(cmd->cmd, "SMSG Invalid Nick !");
+	if (error == ERR_INVALID_NICK)
+		ft_strcat(cmd->cmd, "SMSG Invalid nick !");
+	else if (error == ERR_NICK_USED)
+		ft_strcat(cmd->cmd, "SMSG Nick already used !");
 	ft_strcat(cmd->cmd, END_PACKET);
 	return (1);
 }
@@ -50,11 +54,13 @@ int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
 
 	arg_size = arg->end - arg->begin - 6;
 	if (arg->end == arg->begin + 6 || arg_size == 0 || arg_size > MAX_NICK_LEN)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_INVALID_NICK));
 	ft_bzero(new_name, MAX_NICK_LEN + 1);
 	ft_memcpy(new_name, arg->begin + 6, arg_size);
 	if (srv_is_nick_valid(new_name) == 0 || srv_is_str_a_cmd(new_name) == 1)
-		return (set_error(cmd, fd_sock));
+		return (set_error(cmd, fd_sock, ERR_INVALID_NICK));
+	if (srv_is_nick_already_in_use(new_name) == 1)
+		return (set_error(cmd, fd_sock, ERR_NICK_USED));
 	ft_bzero(old_name, MAX_NICK_LEN + 1);
 	ft_memcpy(old_name, env->list_fd[fd_sock].nick, MAX_NICK_LEN);
 	ft_memcpy(env->list_fd[fd_sock].nick, new_name, MAX_NICK_LEN);

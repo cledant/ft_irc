@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/28 11:25:41 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/29 16:09:38 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef enum		e_err
 	ERR_SERV_NOT_FOUND,
 	ERR_SERV_CONNECT,
 	ERR_INIT_NCURSES,
+	ERR_INVALID_NICK,
+	ERR_NICK_USED,
 	ERR_NONE,
 }					t_err;
 
@@ -303,6 +305,7 @@ void				srv_notify_quit_common_chan(t_env *env, const int fd_stock,
 void				srv_seek_userlist(t_env *env, t_userlist *u_list);
 void				srv_itoa_buffer(int n, char *buffer);
 int					srv_is_nick_valid(const char *name);
+int					srv_is_nick_already_in_use(const char *name);
 
 /*
 ** SERVER COMMAND FUNCTIONS
