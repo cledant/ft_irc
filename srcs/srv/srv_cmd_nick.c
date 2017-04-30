@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/27 21:51:07 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/29 16:07:59 by cledant          ###   ########.fr       */
+/*   Updated: 2017/04/30 11:58:11 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int						srv_cmd_nick(t_cmd *cmd, const t_cmd_arg *arg,
 	ft_memcpy(new_name, arg->begin + 6, arg_size);
 	if (srv_is_nick_valid(new_name) == 0 || srv_is_str_a_cmd(new_name) == 1)
 		return (set_error(cmd, fd_sock, ERR_INVALID_NICK));
-	if (srv_is_nick_already_in_use(new_name) == 1)
+	if (srv_is_nick_free(env, fd_sock, new_name) == 0)
 		return (set_error(cmd, fd_sock, ERR_NICK_USED));
 	ft_bzero(old_name, MAX_NICK_LEN + 1);
 	ft_memcpy(old_name, env->list_fd[fd_sock].nick, MAX_NICK_LEN);
