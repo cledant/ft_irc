@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 21:29:08 by cledant          ###   ########.fr       */
+/*   Updated: 2017/05/01 13:14:44 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static inline int		is_online_case(const char *cmd_str,
 		return (clnt_cmd_msg(arg, env));
 	else if (ft_strcmp(cmd_str, "who") == 0)
 		return (clnt_cmd_who(arg, env));
+	else if (ft_strcmp(cmd_str, "switch") == 0)
+		return (clnt_cmd_switch(arg, env));
 	wprintw(env->out, "Unknown command !\n");
 	return (0);
 }
