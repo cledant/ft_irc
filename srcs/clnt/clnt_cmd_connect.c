@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 18:32:40 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/20 21:21:37 by cledant          ###   ########.fr       */
+/*   Updated: 2017/05/01 15:44:15 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ static inline int		check_first_arg(char **ptr_first_arg, t_clnt_env *env,
 	return (1);
 }
 
+static inline char		*check_separator(const char *ptr_first_arg)
+{
+	char	*ptr_second_arg;
+
+	if ((ptr_second_arg = ft_strchr(ptr_first_arg + 1, ' ')) != NULL)
+		return (ptr_second_arg);
+	else if ((ptr_second_arg = ft_strchr(ptr_first_arg + 1, ':')) != NULL)
+		return (ptr_second_arg);
+	return (NULL);
+}
+
 int						clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env)
 {
 	char	*ptr_first_arg;
@@ -52,7 +63,7 @@ int						clnt_cmd_connect(const t_cmd_arg *arg, t_clnt_env *env)
 		return (0);
 	ft_bzero(first_arg, MAX_MSG_LEN + 1);
 	ft_bzero(second_arg, MAX_MSG_LEN + 1);
-	if ((ptr_second_arg = ft_strchr(ptr_first_arg + 1, ' ')) == NULL)
+	if ((ptr_second_arg = check_separator(ptr_first_arg)) == NULL)
 		no_port(first_arg, env, arg, ptr_first_arg);
 	else
 	{
