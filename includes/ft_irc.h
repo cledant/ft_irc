@@ -6,7 +6,7 @@
 /*   By: cledant <cledant@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 12:14:46 by cledant           #+#    #+#             */
-/*   Updated: 2017/05/01 13:15:29 by cledant          ###   ########.fr       */
+/*   Updated: 2017/05/01 13:49:50 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,7 @@ int					clnt_disp_second_cmd_check(t_disp_cmd *cmd,
 int					clnt_check_other_cmd(const char *cmd_part,
 						const t_cmd_arg *arg, t_disp_cmd *cmd,
 						const char *begin);
+int					clnt_prompt_no_cmd(t_clnt_env *env);
 
 /*
 ** CLIENT COMMAND FUNCTIONS

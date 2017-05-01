@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 16:25:51 by cledant           #+#    #+#             */
-/*   Updated: 2017/04/18 22:35:38 by cledant          ###   ########.fr       */
+/*   Updated: 2017/05/01 14:08:18 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ t_err		clnt_init_env(t_clnt_env *env, char **argv)
 		return (ERR_MAX_FD);
 	env->should_loop = 1;
 	env->file_name = argv[0];
+	ft_strcat(env->last_chan, "#");
 	return (ERR_NONE);
 }

@@ -6,7 +6,7 @@
 /*   By: cledant <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:01:34 by cledant           #+#    #+#             */
-/*   Updated: 2017/05/01 13:14:44 by cledant          ###   ########.fr       */
+/*   Updated: 2017/05/01 13:49:04 by cledant          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int						clnt_interpret_prompt_cmd(t_clnt_env *env)
 
 	if ((arg.begin = ft_strnstr(env->buff, CLNT_BEGIN_CMD, MAX_MSG_LEN))
 			== NULL)
-		return (0);
+		return (clnt_prompt_no_cmd(env));
 	if ((arg.end = ft_strnstr(env->buff, CLNT_END_CMD, MAX_MSG_LEN)) == NULL)
 		return (0);
 	*arg.end = '\0';
