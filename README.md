@@ -4,12 +4,12 @@
 
 ## Supported commands
 
-/nick <nickname>  
-/join <#channel>  
-/leave [#channel]  
-/who  
-/msg <nick/#channel> <message>  
-/connect <machine> [port]
+`/nick <nickname>`  
+`/join <#channel>`  
+`/leave [#channel]`  
+`/who`  
+`/msg <nick/#channel> <message>`  
+`/connect <machine> [port]`
 
 ## Compiling
 
